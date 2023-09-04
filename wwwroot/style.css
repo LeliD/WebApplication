@@ -5765,6 +5765,14 @@ tfoot {
 
 /* -- Section Color / Shadow
 --------------------------------------------------------------*/
+.navbar-brand img {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintains the aspect ratio while adjusting the width */
+    border-radius: 50%;
+}
+.contact-block, .header-top-right {
+    margin-top: 30px; /* Adjust the value as needed */
+}
 .bg-accent {
   background-color: #ce3c83 !important;
 }
