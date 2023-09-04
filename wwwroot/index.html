@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Your head content, including CSS links, goes here -->
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Slick Carousel JS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
     <title>Bakery</title>
     <meta charset="utf-8">
@@ -49,10 +55,10 @@
 
                                 <div class="header-top-right">
                                     <!--<ul class="list-unstyled d-flex color-secondary">
-                                        <li class="pr-50"><a href="#">My Account</a></li>
-                                        <li class="pr-50"><a href="#">FAQs</a></li>
-                                        <li><a href="#">Help</a></li>
-                                    </ul>-->
+                                    <li class="pr-50"><a href="#">My Account</a></li>
+                                    <li class="pr-50"><a href="#">FAQs</a></li>
+                                    <li><a href="#">Help</a></li>
+                                </ul>-->
                                     <ul class="navbar-nav list-inline text-uppercase">
                                         <li class="nav-item text-hover active"><a href="index.html" class="nav-link" data-effect="Home">Home</a></li>
                                         <li class="nav-item text-hover"><a href="about.html" class="nav-link" data-effect="About Us">About us</a></li>
@@ -70,56 +76,56 @@
             </div>
             <!----top-menu---->
             <!--<header id="header">
-                <div class="container">
-                    <div class="row">
+            <div class="container">
+                <div class="row">
 
-                        <nav class="navbar navbar-expand-lg col-md-12">-->
+                    <nav class="navbar navbar-expand-lg col-md-12">-->
             <!--<div class="navbar-brand">
-                <a href="index.html">
-                    <img src="images/main-logo.png" alt="logo">
-                </a>
-            </div>-->
+            <a href="index.html">
+                <img src="images/main-logo.png" alt="logo">
+            </a>
+        </div>-->
             <!--<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#slide-navbar-collapse" aria-controls="slide-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"><i class="icon icon-navicon"></i></span>
-            </button>-->
+            <span class="navbar-toggler-icon"><i class="icon icon-navicon"></i></span>
+        </button>-->
             <!--<div class="navbar-collapse collapse" id="slide-navbar-collapse">
-                <ul class="navbar-nav list-inline text-uppercase">
-                    <li class="nav-item text-hover active"><a href="index.html" class="nav-link" data-effect="Home">Home</a></li>
-                    <li class="nav-item text-hover"><a href="about.html" class="nav-link" data-effect="About Us">About us</a></li>
-                    <li class="nav-item text-hover"><a href="blog.html" class="nav-link" data-effect="Blogs">Blog</a></li>
-                    <li class="nav-item text-hover"><a href="contact.html" class="nav-link" data-effect="Contact">Contact us</a></li>
-                    <li class="nav-item text-hover"><a href="shop.html" class="nav-link" data-effect="Shop">Shop</a></li>
+            <ul class="navbar-nav list-inline text-uppercase">
+                <li class="nav-item text-hover active"><a href="index.html" class="nav-link" data-effect="Home">Home</a></li>
+                <li class="nav-item text-hover"><a href="about.html" class="nav-link" data-effect="About Us">About us</a></li>
+                <li class="nav-item text-hover"><a href="blog.html" class="nav-link" data-effect="Blogs">Blog</a></li>
+                <li class="nav-item text-hover"><a href="contact.html" class="nav-link" data-effect="Contact">Contact us</a></li>
+                <li class="nav-item text-hover"><a href="shop.html" class="nav-link" data-effect="Shop">Shop</a></li>
 
 
-                </ul>
-            </div>-->
+            </ul>
+        </div>-->
             <!--<div class="action-menu">
-                <div class="searchbar">
-                    <a href="#" class="search-button search-toggle" data-selector=".navbar">
-                        <i class="icon icon-search"></i>
-                    </a>
-                    <form role="search" method="get" class="search-box" action="">
-                        <input class="search-field text search-input" placeholder="Search" type="search">
-                    </form>
-                </div>
-                <div class="shopping-cart">
-                    <a href="#">
-                        <i class="icon icon-shopping-cart"></i>
-                    </a>
-                </div>
-            </div>-->
+            <div class="searchbar">
+                <a href="#" class="search-button search-toggle" data-selector=".navbar">
+                    <i class="icon icon-search"></i>
+                </a>
+                <form role="search" method="get" class="search-box" action="">
+                    <input class="search-field text search-input" placeholder="Search" type="search">
+                </form>
+            </div>
+            <div class="shopping-cart">
+                <a href="#">
+                    <i class="icon icon-shopping-cart"></i>
+                </a>
+            </div>
+        </div>-->
             <!--action-menu-->
             <!--</nav>
 
-                    </div>
                 </div>
+            </div>
 
-            </header>-->
+        </header>-->
 
         </div><!--header-wrap-->
-
         <section id="billboard">
             <div class="main-slider">
+                <!-- Your slider items here -->
 
                 <div class="slider-item">
 
@@ -171,13 +177,31 @@
                             <a href="#" class="btn-hvr-effects mt-3">Shop Now</a>
                         </div>
                     </div><!--content-box-->
-
-
                 </div><!--slider-item-->
+            </div>
+</section>
 
-            </div><!--slider-->
+        <!-- Initialize the Slick Carousel -->
+        <script>
+            $(document).ready(function () {
+                $('.main-slider').slick({
+                    // Slick Carousel options and settings go here
+                    // For example:
+                    // autoplay: true,
+                    // dots: true,
+                    // arrows: true,
+                });
+            });
+        </script>
+        <!--<section id="billboard">
+            <div class="main-slider">-->
 
-        </section>
+
+                
+
+            <!--</div>--><!--slider-->
+
+        <!--</section>-->
 
         <section class="about-us margin-medium">
             <div class="container">
