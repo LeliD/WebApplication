@@ -1528,11 +1528,11 @@ html {
 }
 
 .container {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 @media (min-width: 576px) {
@@ -5772,7 +5772,7 @@ tfoot {
   background-color: #fff !important;
 }
 .bg-black {
-  background-color: #151515 !important;
+    background-color: #FFC0CB !important;
 }
 .bg-grey {
   background-color: #d7d4d6 !important;
