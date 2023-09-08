@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebApplicationIceCreamProject.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<AdminContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AdminContext") ?? throw new InvalidOperationException("Connection string 'AdminContext' not found.")));
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
