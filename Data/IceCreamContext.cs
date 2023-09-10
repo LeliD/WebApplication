@@ -7,13 +7,14 @@ using WebApplicationIceCreamProject.Models;
 
 namespace WebApplicationIceCreamProject.Data
 {
-    public class AdminContext : DbContext
+    public class IceCreamContext : DbContext
     {
-        public AdminContext (DbContextOptions<AdminContext> options)
+        public IceCreamContext(DbContextOptions<IceCreamContext> options)
             : base(options)
         {
         }
 
         public DbSet<WebApplicationIceCreamProject.Models.IceCream> IceCream { get; set; } = default!;
+        public DbSet<CartItem> ShoppingCartItems { get; set; }
     }
 }

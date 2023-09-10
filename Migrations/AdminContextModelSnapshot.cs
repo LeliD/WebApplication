@@ -9,7 +9,7 @@ using WebApplicationIceCreamProject.Data;
 
 namespace WebApplicationIceCreamProject.Migrations
 {
-    [DbContext(typeof(AdminContext))]
+    [DbContext(typeof(IceCreamContext))]
     partial class AdminContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

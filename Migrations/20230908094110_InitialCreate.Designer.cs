@@ -10,7 +10,7 @@ using WebApplicationIceCreamProject.Data;
 
 namespace WebApplicationIceCreamProject.Migrations
 {
-    [DbContext(typeof(AdminContext))]
+    [DbContext(typeof(IceCreamContext))]
     [Migration("20230908094110_InitialCreate")]
     partial class InitialCreate
     {

@@ -9,8 +9,8 @@ namespace WebApplicationIceCreamProject.Controllers
     public class HomeController : Controller
     {
         //private readonly ILogger<HomeController> _logger;
-        private readonly AdminContext _context;
-        public HomeController(/*ILogger<HomeController> logger*/AdminContext context)
+        private readonly IceCreamContext _context;
+        public HomeController(/*ILogger<HomeController> logger*/IceCreamContext context)
         {
             //_logger = logger;
             _context=context;   

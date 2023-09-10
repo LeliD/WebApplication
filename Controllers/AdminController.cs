@@ -12,9 +12,9 @@ namespace WebApplicationIceCreamProject.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly AdminContext _context;
+        private readonly IceCreamContext _context;
 
-        public AdminController(AdminContext context)
+        public AdminController(IceCreamContext context)
         {
             _context = context;
         }

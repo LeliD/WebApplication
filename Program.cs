@@ -4,7 +4,7 @@ using WebApplicationIceCreamProject.Data;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<AdminContext>(options =>
+builder.Services.AddDbContext<IceCreamContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AdminContext") ?? throw new InvalidOperationException("Connection string 'AdminContext' not found.")));
 
 // Add services to the container.
