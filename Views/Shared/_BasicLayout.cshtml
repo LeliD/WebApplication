@@ -2,8 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    C:\Users\Shilat Sharon\Source\Repos\WebApplicationIceCreamProject\wwwroot\fonts\
-    <title>Bakery</title>
+    <title> @ViewData["Title"]</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +23,12 @@
 
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/style.css">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Slick Carousel JS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
 
 </head>
 
@@ -55,11 +60,11 @@
                                         <li><a href="#">Help</a></li>
                                     </ul>-->
                                     <ul class="navbar-nav list-inline text-uppercase">
-                                        <li class="nav-item text-hover active"><a href="index.html" class="nav-link" data-effect="Home">Home</a></li>
-                                        <li class="nav-item text-hover"><a href="about.html" class="nav-link" data-effect="About Us">About us</a></li>
-                                        <li class="nav-item text-hover"><a href="contact.html" class="nav-link" data-effect="Contact">Contact us</a></li>
-                                        <li class="nav-item text-hover"><a href="~/shop" class="nav-link" data-effect="Shop">Shop</a></li>
-                                        <li class="nav-item text-hover"><a href="blog.html" class="nav-link" data-effect="Blogs">Make Order</a></li>
+                                        <li class="nav-item text-hover active"><a asp-controller="Home" asp-action="Index" class="nav-link" data-effect="Home">Home</a></li>
+                                        <li class="nav-item text-hover"><a asp-controller="Home" asp-action="About" class="nav-link" data-effect="About Us">About us</a></li>
+                                        <li class="nav-item text-hover"><a asp-controller="Home" asp-action="Contact" class="nav-link" data-effect="Contact">Contact us</a></li>
+                                        <li class="nav-item text-hover"><a asp-controller="Home" asp-action="Shop" class="nav-link" data-effect="Shop">Shop</a></li>
+                                        <li class="nav-item text-hover"><a href="/blog.html" class="nav-link" data-effect="Blogs">Make Order</a></li>
 
                                     </ul>
                                 </div>
@@ -161,12 +166,12 @@
                                 <h4 class="widget-title">Quick Links</h4>
                                 <div class="footer-menu">
                                     <ul class="list-unstyled">
-                                        <li><a href="#">Home</a></li>
-                                        <li><a href="about.html">About us</a></li>
-                                        <li><a href="#">Gallery</a></li>
-                                        <li><a href="#">Shop</a></li>
-                                        <li><a href="blog.html">Blogs</a></li>
-                                        <li><a href="contact.html">Contact us</a></li>
+                                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                        <li><a asp-controller="Home" asp-action="About">About us</a></li>
+                                        <li><a asp-controller="Home" asp-action="Index">Gallery</a></li>
+                                        <li><a asp-controller="Home" asp-action="Shop">Shop</a></li>
+                                        <li><a href="/blog.html">Blogs</a></li>
+                                        <li><a asp-controller="Home" asp-action="Contact">Contact us</a></li>
                                     </ul>
                                 </div>
                             </div>

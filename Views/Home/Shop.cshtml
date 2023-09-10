@@ -1,38 +1,32 @@
 ﻿@model IEnumerable<WebApplicationIceCreamProject.Models.IceCream>
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Shop";
     Layout = "~/Views/Shared/_BasicLayout.cshtml";
 }
 
-<h1>List of Flavors</h1>
+<div class="site-banner">
+	<div class="banner-content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">			
+					<div class="colored">
+						<h1>Shop</h1>
+						<div class="breadcum-items">
+							<span class="item"><a href="index.html">Home /</a></span>
+							<span class="item colored">Shop</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!--site-banner-->
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-@*<table class="table">*@
-  @*  <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image_URL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>*@
-  @*  <tbody>*@
 <section class="our-team bg-sand padding-large">
-    <div class="container">
-        <div class="row">
-@foreach (var item in Model) {
+	<div class="container">
+		<div class="row">
+
+				@foreach (var item in Model) {
                 <div class="product-item col-md-3 pb-4 text-center">
                     <a href=~/images/@Html.DisplayFor(modelItem => item.Image_URL) class="product-image"><img src=~/images/@Html.DisplayFor(modelItem => item.Image_URL)></a>
                     <div class="text-comtent text-center">
@@ -40,9 +34,9 @@
                         <p> @Html.DisplayFor(modelItem => item.Description)</p>
                         <span class="price colored"> @Html.DisplayFor(modelItem => item.Price)$</span>  
                     </div>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                  
+                    <a asp-action="Details" asp-route-id="@item.Id">| Details |</a>
+                  
                 </div>
 
        @* <tr>
@@ -65,8 +59,8 @@
             </td>
         </tr>*@
 }
-        </div>
-    </div>
+
+		</div>
+	</div>
 </section>
- @*   </tbody>*@
-@*</table>*@
+
