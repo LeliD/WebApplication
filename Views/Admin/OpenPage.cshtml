@@ -8,3 +8,25 @@
 <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
     </li>
+   
+<section class="blog_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            @*<div class="homeUser_text">*@
+                
+                <h2>
+                    <span>
+                    Hello @User.Identity?.Name!
+                    </span>
+                </h2>
+            @*</div>*@
+        </div>
+        <p style="font-family:'Guttman Rashi'; font-size:25px">
+            Welcome to the users area of the new whipped cream website.<br>
+            Here you can add to the site everything you want, new flavors especially for our customers,<br>
+            changing details of existing flavors, promotions, orders placed, watching the prediction of <br>
+            buying ice cream and a sales graph.<br>
+            So come on let's get started ;)
+        </p>
+    </div>
+</section>
