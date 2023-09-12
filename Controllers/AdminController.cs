@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplicationIceCreamProject.Data;
 using WebApplicationIceCreamProject.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 
 namespace WebApplicationIceCreamProject.Controllers
 {
@@ -25,6 +28,10 @@ namespace WebApplicationIceCreamProject.Controllers
               return _context.IceCream != null ? 
                           View(await _context.IceCream.ToListAsync()) :
                           Problem("Entity set 'AdminContext.IceCream'  is null.");
+        }
+        public async Task<IActionResult> OpenPage()
+        {
+            return View();
         }
 
         // GET: Admin/Details/5

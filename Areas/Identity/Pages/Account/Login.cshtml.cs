@@ -103,7 +103,7 @@ namespace WebApplicationIceCreamProject.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/Admin");//here to change the html page
+            returnUrl ??= Url.Content("~/Admin/OpenPage");//here to change the html page
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
