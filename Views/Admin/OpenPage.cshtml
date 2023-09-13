@@ -4,7 +4,11 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
+ 
+@{ 
+ string emailAddress = @User.Identity?.Name!;
+ string name1 = System.Text.RegularExpressions.Regex.Match(emailAddress, "^[A-Za-z]+").Value;
+}
 <section class="blog_section layout_padding">
     <div class="container">
         <div class="heading_container">
@@ -12,7 +16,7 @@
                 
                 <h2>
                     <span>
-                    Hello @User.Identity?.Name!
+                    Hello @name1
                     </span>
                 </h2>
             @*</div>*@
