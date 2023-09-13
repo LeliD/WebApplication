@@ -4,7 +4,11 @@
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
-{
+{@* 
+        var user = await UserManager.FindByNameAsync(@User.Identity?.Name!);
+        user.UserName = "Shira";
+        var result = await UserManager.UpdateAsync(user);
+ *@
     <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
     </li>
@@ -21,6 +25,7 @@ else
     </li>*@
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
+        </li>
+        
+    }
 </ul>
