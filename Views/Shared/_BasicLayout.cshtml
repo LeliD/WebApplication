@@ -38,19 +38,19 @@
         <div id="header-wrap">
             <div class="header-top-menu bg-black color-secondary">
                 <div class="container">
-                    <div class="row">
+                    <div class="navbarow">
                         <!--!!!!!!!!!!!!-->
                         <nav class="navbar navbar-expand-lg col-md-12">
                             <div class="wrap flex-container padding-small">
                                 <!--!!!!!!!!!!!!-->
                                 <div class="navbar-brand">
                                     <a href="index.html">
-                                        <img src="~/images/main-logo.png" alt="logo">
+                                        <img class="navbar-logo" src="~/images/logo.png" alt="logo">
                                     </a>
                                 </div>
                                 <div class="contact-block">
-                                    <span class="pr-50"><i class="icon icon-phone"></i>5555-00-444</span>
-                                    <span class="color-secondary"><i class="icon icon-envelope-o"></i><a href="#"> bakery@gmail.com</a></span>
+                                    <span class="pr-50"><i class="icon icon-phone"></i>03-7584-444</span>
+                                    <span class="color-secondary"><i class="icon icon-envelope-o"></i><a href="#"> icecream@gmail.com</a></span>
                                 </div>
 
                                 <div class="header-top-right">
@@ -66,7 +66,9 @@
                                         <li class="nav-item text-hover"><a asp-controller="Home" asp-action="Shop" class="nav-link" data-effect="Shop">Shop</a></li>
                                         <li class="nav-item text-hover"><a href="/blog.html" class="nav-link" data-effect="Blogs">Make Order</a></li>
                                         <li class="nav-item text-hover"><a asp-area="Identity" asp-page="/Account/Login" class="nav-link" data-effect="Login">Login</a></li>
-                                       <!-- <li class="nav-item text-hover"><a asp-area="Identity" asp-page="/Account/Register" class="nav-link" data-effect="Register">Register</a></li>-->
+                                        <li class="nav-item text-hover"><a asp-controller="Cart" asp-action="Index" class="nav-link" data-effect="About Us">Cart</a></li>
+                                       
+                                        <!-- <li class="nav-item text-hover"><a asp-area="Identity" asp-page="/Account/Register" class="nav-link" data-effect="Register">Register</a></li>-->
                                         
 
                                     </ul>
@@ -135,8 +137,8 @@
                     <div class="wrap flex-container">
 
                         <div class="col-md-3 footer-logo text-center mb-3">
-                            <img src="~/images/main-logo.png" class="mb-3">
-                            <p>Bakery is a free HTML CSS Template by Templates Jungle specially crafted for Bakeries.</p>
+                            <img src="~/images/logo.png" class="mb-3" style="border-radius: 50%;">
+                            <p>IceCream Delights - Savor the Sweet Moments</p>
                         </div>
 
                         <div class="col-md-5 mr-5 mb-3">
@@ -173,7 +175,6 @@
                                         <li><a asp-controller="Home" asp-action="About">About us</a></li>
                                         <li><a asp-controller="Home" asp-action="Index">Gallery</a></li>
                                         <li><a asp-controller="Home" asp-action="Shop">Shop</a></li>
-                                        <li><a href="/blog.html">Blogs</a></li>
                                         <li><a asp-controller="Home" asp-action="Contact">Contact us</a></li>
                                     </ul>
                                 </div>
@@ -190,7 +191,7 @@
             <div class="container">
                 <div class="wrap flex-container padding-small">
                     <div class="copyright">
-                        <p class="mb-0">© 2021 Bakery HTML Template by <a href="https://templatesjungle.com/" target="_blank">Templates Jungle</a></p>
+                        <p class="mb-0">© 2023 Deliciously Crafted with Love by <a href="https://templatesjungle.com/" target="_blank">IceCream Delights 🍦</a></p>
                     </div>
                     <div class="payment-card">
                         <span>We Accept:</span>

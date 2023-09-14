@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<WebApplicationIceCreamProject.Models.IceCream>
+
+@{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_BasicLayout.cshtml";
 }
@@ -174,38 +176,39 @@
 
 <section class="best-products margin-large">
     <div class="container">
-        <h2 class="section-title text-center mb-4">Best Product</h2>
+        <h2 class="section-title text-center mb-4">Best Products</h2>
         <div class="row">
             <div class="d-flex products-slider">
-
+                @foreach (var item in Model) {
                 <div class="product-item col-md-3 pl-0">
-                    <a href="single-product.html" class="product-image"><img src="images/b.png"></a>
+                    <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id" class="product-image"><img src="~/images/@item.Image_URL"></a>
                     <div class="text-comtent text-center text-hover">
-                        <h5 class="pt-4"><a href="single-product.html">CHOCOLATE & SEA SALT</a></h5>
-                        <span class="price colored">$10</span>
+                        <h5 class="pt-4"><a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">@item.Name</a></h5>
+                        <span class="price colored">@item.Price$</span>
+                    </div>
+                </div>
+                }
+               @* <div class="product-item col-md-3 pl-0">
+                    <a asp-controller="Home" asp-action="Details" asp-route-id="3" class="product-image"><img src="images/c.png"></a>
+                    <div class="text-comtent text-center text-hover">
+                        <h5 class="pt-4"><a asp-controller="Home" asp-action="Details" asp-route-id="3">VANILLA STRABERRY</a></h5>
+                        <span class="price colored">15$</span>
                     </div>
                 </div>
                 <div class="product-item col-md-3 pl-0">
-                    <a href="single-product.html" class="product-image"><img src="images/c.png"></a>
+                    <a asp-controller="Home" asp-action="Details" asp-route-id="5" class="product-image"><img src="images/e.png"></a>
                     <div class="text-comtent text-center text-hover">
-                        <h5 class="pt-4"><a href="single-product.html">VANILLA STRABERRY</a></h5>
-                        <span class="price colored">$10</span>
+                        <h5 class="pt-4"><a asp-controller="Home" asp-action="Details" asp-route-id="5">PITACHIO</a></h5>
+                        <span class="price colored">7$</span>
                     </div>
                 </div>
                 <div class="product-item col-md-3 pl-0">
-                    <a href="single-product.html" class="product-image"><img src="images/e.png"></a>
+                    <a asp-controller="Home" asp-action="Details" asp-route-id="7" class="product-image"><img src="images/g.png"></a>
                     <div class="text-comtent text-center text-hover">
-                        <h5 class="pt-4"><a href="single-product.html">PITACHIO</a></h5>
-                        <span class="price colored">$10</span>
+                        <h5 class="pt-4"><a asp-controller="Home" asp-action="Details" asp-route-id="7">SALTED CARAMEL SOY</a></h5>
+                        <span class="price colored">15$</span>
                     </div>
-                </div>
-                <div class="product-item col-md-3 pl-0">
-                    <a href="single-product.html" class="product-image"><img src="images/g.png"></a>
-                    <div class="text-comtent text-center text-hover">
-                        <h5 class="pt-4"><a href="single-product.html">SALTED CARAMEL SOY</a></h5>
-                        <span class="price colored">$10</span>
-                    </div>
-                </div>
+                </div>*@
 
             </div><!--slider-->
         </div>
@@ -401,11 +404,11 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="d-flex list-unstyled justify-content-between flex-wrap">
-                    <li><a href="#"><img src="images/baker.svg" class="brandImg"></a></li>
-                    <li><a href="#"><img src="images/bakery.svg" class="brandImg"></a></li>
-                    <li><a href="#"><img src="images/thebakery.svg" class="brandImg"></a></li>
-                    <li><a href="#"><img src="images/breadcookies.svg" class="brandImg"></a></li>
-                    <li><a href="#"><img src="images/bakery.svg" class="brandImg"></a></li>
+                    <li><a href="#"><img src="images/ice-cream-shop.png" class="brandImg"></a></li>
+                    <li><a href="#"><img src="images/icecream2.png" class="brandImg"></a></li>
+                    <li><a href="#"><img src="images/icecream1.png" class="brandImg"></a></li>
+                    <li><a href="#"><img src="images/ice-cream-shop2.png" class="brandImg"></a></li>
+                    <li><a href="#"><img src="images/signal.png" class="brandImg"></a></li>
                 </ul>
             </div>
         </div>

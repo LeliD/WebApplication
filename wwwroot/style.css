@@ -1611,6 +1611,14 @@ html {
   margin-right: -15px;
   margin-left: -15px;
 }
+.navbarow {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -120px;
+    margin-left: -120px;
+}
 
 .no-gutters {
   margin-right: 0;
@@ -5600,8 +5608,8 @@ tfoot {
   padding-bottom: 0.5em;
 }
 .padding-small {
-  padding-top: 2em;
-  padding-bottom: 2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 .padding-medium {
   padding-top: 4em;
@@ -5770,6 +5778,7 @@ tfoot {
     height: auto; /* Maintains the aspect ratio while adjusting the width */
     border-radius: 50%;
 }
+
 .contact-block, .header-top-right {
     margin-top: 30px; /* Adjust the value as needed */
 }
@@ -6642,7 +6651,7 @@ a.magnific-popup:hover .overlay {
 /* - Page Banner Section
 --------------------------------------------------------------*/
 .site-banner{
-   background: url(images/banner.jpg) no-repeat; 
+   background: url(images/banner5.jpg) no-repeat; 
    height: 567px;
 }
 .site-banner .banner-content {

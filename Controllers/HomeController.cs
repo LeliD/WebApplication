@@ -16,9 +16,26 @@ namespace WebApplicationIceCreamProject.Controllers
             _context=context;   
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var iceCreamList = new List<IceCream>();
+            var iceCream1 = await _context.IceCream
+              .FirstOrDefaultAsync(m => m.Id == 2);
+            var iceCream2 = await _context.IceCream
+                .FirstOrDefaultAsync(m => m.Id == 3);
+            var iceCream3 = await _context.IceCream
+              .FirstOrDefaultAsync(m => m.Id == 5);
+            var iceCream4 = await _context.IceCream
+              .FirstOrDefaultAsync(m => m.Id == 7);
+            if (iceCream1 != null)
+                iceCreamList.Add(iceCream1);
+            if (iceCream2 != null)
+                iceCreamList.Add(iceCream2);
+            if (iceCream3 != null)
+                iceCreamList.Add(iceCream3);
+            if (iceCream4 != null)
+                iceCreamList.Add(iceCream4);
+            return View(iceCreamList);
         }
         // GET: Home/Shop
         public async Task<IActionResult> Shop()

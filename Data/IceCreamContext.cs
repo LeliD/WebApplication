@@ -13,6 +13,9 @@ namespace WebApplicationIceCreamProject.Data
             : base(options)
         {
         }
+        public IceCreamContext()
+        {
+        }
 
         public DbSet<WebApplicationIceCreamProject.Models.IceCream> IceCream { get; set; } = default!;
         public DbSet<CartItem> ShoppingCartItems { get; set; }
