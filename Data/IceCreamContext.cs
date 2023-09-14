@@ -19,5 +19,6 @@ namespace WebApplicationIceCreamProject.Data
 
         public DbSet<WebApplicationIceCreamProject.Models.IceCream> IceCream { get; set; } = default!;
         public DbSet<CartItem> ShoppingCartItems { get; set; }
+        public DbSet<WebApplicationIceCreamProject.Models.Order>? Order { get; set; }
     }
 }
