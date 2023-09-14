@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebApplicationIceCreamProject.Data;
 using Microsoft.Extensions.DependencyInjection;
-
+using WebApplicationIceCreamProject.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<IceCreamContext>(options =>
@@ -20,6 +20,8 @@ builder.Services.AddControllersWithViews();
 // Add session support
 builder.Services.AddSession(); // Add this line
 var app = builder.Build();
+
+var settings = builder.Configuration.GetSection("PayPalSettings").Get<PayPalSettings>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
