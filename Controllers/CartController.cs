@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using System.Text.Json;
 using WebApplicationIceCreamProject.Data;
 using WebApplicationIceCreamProject.Models;
 
@@ -57,10 +58,16 @@ namespace WebApplicationIceCreamProject.Controllers
                 CartItems = cartItems,
                 Flavours = flavours
             };
-            Order order = new Order() { Products = cart.CartItems, Total= cart.Total() };
+            //Order order = new Order() { Products = cart.CartItems, Total= cart.Total() };
+            Order order = new Order() { Products = cart.CartItems, Total = cart.Total() };
+            string orderJson = JsonSerializer.Serialize(order);
 
+            // Pass it as a route value
+            return RedirectToAction("Checkout", "Orders", new { order = orderJson });
+
+            //return RedirectToAction("Checkout", "Orders", order);
             // To open a view from a different controller
-            return View("~/Views/Orders/Checkout.cshtml", order);
+            //return View("~/Views/Orders/Checkout.cshtml", order);
         }
 
         public async Task AddToCart(int id, double size)
@@ -108,11 +115,9 @@ namespace WebApplicationIceCreamProject.Controllers
             }
             base.Dispose(disposing);
         }
-
-
         public string GetCartId()
         {
-            if (HttpContext.Session.Get(CartSessionKey) == null)
+            if (HttpContext.Session.Get(CartSessionKey) == null || TempData["OrderCompleted"] != null)
             {
                 if (!string.IsNullOrWhiteSpace(User.Identity.Name))
                 {
@@ -126,10 +131,36 @@ namespace WebApplicationIceCreamProject.Controllers
                     var bytes1 = Encoding.UTF8.GetBytes(tempCartId.ToString());
                     HttpContext.Session.Set(CartSessionKey, bytes1);
                 }
+
+                // Remove the TempData flag to indicate that the order is not completed.
+                TempData.Remove("OrderCompleted");
             }
+
             var bytes = HttpContext.Session.Get(CartSessionKey);
             return Encoding.UTF8.GetString(bytes);
         }
+
+
+        //public string GetCartId()
+        //{
+        //    if (HttpContext.Session.Get(CartSessionKey) == null)
+        //    {
+        //        if (!string.IsNullOrWhiteSpace(User.Identity.Name))
+        //        {
+        //            var bytes1 = Encoding.UTF8.GetBytes(User.Identity.Name);
+        //            HttpContext.Session.Set(CartSessionKey, bytes1);
+        //        }
+        //        else
+        //        {
+        //            // Generate a new random GUID using System.Guid class.
+        //            Guid tempCartId = Guid.NewGuid();
+        //            var bytes1 = Encoding.UTF8.GetBytes(tempCartId.ToString());
+        //            HttpContext.Session.Set(CartSessionKey, bytes1);
+        //        }
+        //    }
+        //    var bytes = HttpContext.Session.Get(CartSessionKey);
+        //    return Encoding.UTF8.GetString(bytes);
+        //}
 
         public List<CartItem> GetCartItems()
         {
@@ -142,6 +173,10 @@ namespace WebApplicationIceCreamProject.Controllers
         public IceCream GetFlavourById(int id)
         {
             return _db.IceCream.SingleOrDefault(p => p.Id == id);
+        }
+        public string GetFlavourNameById(int id)
+        {
+            return GetFlavourById(id).Name;
         }
     }
 }

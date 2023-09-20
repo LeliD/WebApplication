@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,16 +21,38 @@ namespace WebApplicationIceCreamProject.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateOrder([Bind("Id,FirstName,LastName,PhoneNumber,Email,Street,City,HouseNumber,products,Date,FeelsLike,Humidity,IsItHoliday,Day")] Order order)
+        public async Task<IActionResult> CreateOrder([Bind("Id,FirstName,LastName,PhoneNumber,Email,Street,City,HouseNumber,Products,Date,FeelsLike,Humidity,IsItHoliday,Day")] Order order)
         {
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 _db.Add(order);
                 await _db.SaveChangesAsync();
+                // After the order is successfully placed, set the TempData flag.
+                TempData["OrderCompleted"] = true;
+
                 return RedirectToAction("ThankYou");
-            //}
+            }
             return View(order);
         }
+        //public IActionResult Checkout(Order order)
+        //{
+        //    return View(order);
+        //}
+        public IActionResult Checkout(string order)
+        {
+            // Deserialize the order object
+            Order orderObject = JsonSerializer.Deserialize<Order>(order);
+
+            // Ensure the order has the necessary data, e.g., products
+            if (orderObject != null && orderObject.Products != null && orderObject.Products.Any())
+            {
+                return View(orderObject);
+            }
+
+            // Handle the case where the order is not found or doesn't have products
+            return RedirectToAction("Index", "Cart"); // Redirect to an error or fallback action
+        }
+
 
         public IActionResult ThankYou()
         {

@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_BasicLayout.cshtml";
 }
 
-<div class="site-banner">
+@*<div class="site-banner">
 	<div class="banner-content">
 		<div class="container">
 			<div class="row">
@@ -20,7 +20,7 @@
 			</div>
 		</div>
 	</div>
-</div><!--site-banner-->
+</div><!--site-banner-->*@
 
 <section class="bg-sand padding-large">
 	<div class="container">
@@ -37,56 +37,90 @@
 					<span class="price colored"> @Html.DisplayFor(model => model.Price)$</span>
 
 					<p>
-						Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						Welcome to our delightful ice cream shop! Indulge in the rich flavors and creamy textures of our handcrafted ice creams. We take pride in creating the perfect treat for your taste buds.
 					</p>
 					<p>
-						Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						Our commitment to quality and passion for ice cream is evident in every scoop. Whether you prefer classic favorites or adventurous flavors, we have something to satisfy every craving. Come and experience the joy of ice cream with us!
 					</p>
 
-					<label for="delivery-date">Delivery Date</label>
-					<input type="text" id="delivery-date" class="input-text" name="delivery-date" placeholder="Delivery Date">
 
+				@*	<label for="delivery-date">Delivery Date</label>
+					<input type="text" id="delivery-date" class="input-text" name="delivery-date" placeholder="Delivery Date">
+*@
 					<label class="screen-reader-text" for="qty">Black Forest Pastry Quantity</label>
-					<input type="number" id="qty" class="input-text qty text" step="1" min="1" max="" name="quantity" value="1" title="Qty" size="4" placeholder="" inputmode="numeric">
+					@*<input type="number" id="qty" class="input-text qty text" step="1" min="1" max="" name="quantity" value="1" title="Qty" size="4" placeholder="" inputmode="numeric">
+					*@<!-- Size-->
+					<div class="mb-1 d-flex">
+						<label for="option-sm" class="d-flex mr-3 mb-3">
+							<span class="d-inline-block mr-2" style="top:-2px; position: relative;">
+								<input type="radio" id="option-sm" name="shop-sizes"
+									   data-id="@Model.Id" data-price="@Model.Price" data-size="0.25">
+							</span>
+							<span class="d-inline-block text-black">1/4 Liter</span>
+						</label>
+						<label for="option-sm" class="d-flex mr-3 mb-3">
+							<span class="d-inline-block mr-2" style="top:-2px; position: relative;">
+								<input type="radio" id="option-sm" name="shop-sizes"
+									   data-id="@Model.Id" data-price="@Model.Price" data-size="0.5">
+							</span>
+							<span class="d-inline-block text-black">1/2 Liter</span>
+						</label>
+						<label for="option-sm" class="d-flex mr-3 mb-3">
+							<span class="d-inline-block mr-2" style="top:-2px; position: relative;">
+								<input type="radio" id="option-sm" name="shop-sizes"
+									   data-id="@Model.Id" data-price="@Model.Price" data-size="1">
+							</span>
+							<span class="d-inline-block text-black">1 Liter</span>
+						</label>
+					</div>
+					
+					
+					
+					
 					<button id="addToCartButton" type="submit" name="add-to-cart" value="27545" class="button">Add to cart</button>
 					<!--הוספתי את הדיב והסקריפט למטה-->
 					<div id="cartConfirmation" class="alert alert-success" style="display: none;">
 						Product added to cart successfully!
 					</div>
 					<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-					<script>
-						$(document).ready(function () {
-							$("#addToCartButton").on("click", function (e) {
-								e.preventDefault(); // Prevent the default form submission
+	<script>
+		$(document).ready(function () {
+			$("#addToCartButton").on("click", function (e) {
+				e.preventDefault();
 
-								// Get the product ID or any other relevant data you need
-								var productId = @Model.Id;
+				// Get the selected radio button
+				var selectedRadioButton = $("input[name='shop-sizes']:checked");
 
-								// Get the selected size
-								var selectedSize = $("input[name='shop-sizes']:checked").val();
-								// Send an AJAX request to add the product to the cart
-								$.ajax({
-									url: '@Url.Action("AddToCart", "Cart")', // Use Url.Action to generate the correct URL
-									type: "POST",
-									data: { id: productId },
-									success: function (result) {
-										// Show the confirmation message
-										$("#cartConfirmation").show();
+				// Check if a radio button is selected
+				if (selectedRadioButton.length === 0) {
+					alert("Please select a size.");
+					return;
+				}
 
-										// You can also update the cart count or do other actions here
-									},
-									error: function (xhr, status, error) {
-										console.error("Error adding to cart: " + error); // Display the error message
-										console.log(xhr.responseText); // Display the response text received from the server
-									}
-								});
-							});
-						});
-					</script>
+				// Extract data attributes from the selected radio button
+				var productId = selectedRadioButton.data("id");
+				var selectedSize = selectedRadioButton.data("size");
+
+				// Send an AJAX request to add the product to the cart
+				$.ajax({
+					url: '@Url.Action("AddToCart", "Cart")',
+					type: "POST",
+					data: { id: productId, size: selectedSize },
+					success: function (result) {
+						// Show the confirmation message
+						$("#cartConfirmation").show();
+
+						// You can also update the cart count or do other actions here
+					},
+					error: function (xhr, status, error) {
+						console.error("Error adding to cart: " + error);
+						console.log(xhr.responseText);
+					}
+				});
+			});
+		});
+
+	</script>
 				</div>
 			</div>
 
