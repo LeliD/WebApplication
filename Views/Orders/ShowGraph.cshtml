@@ -1,0 +1,72 @@
+﻿@model IEnumerable<WebApplicationIceCreamProject.Models.OrdersDate>
+
+@{
+    ViewData["Title"] = "ShowGraph";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    @*<link rel="stylesheet" type="text/css" href="~/css/Home.css" />*@
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowGraphbetweendates</title>
+
+
+
+</head>
+<body onload="Show()">
+
+    @{
+        string values = string.Empty;
+    }
+    @foreach (var item in Model)
+    {
+        var val = item.Counter;
+        var val2 = item.Day;
+        var val3 = item.Month;
+        values += "{y:" + val + ",label:"+val2+"."+val3+"},";
+
+
+    }
+  @*  @{
+        var str = values.Remove(values.Length - 1, 1);
+    }*@
+    @{
+        var str = values;
+    }
+    <script>
+        var data ="@str";
+    </script>
+
+
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+
+    <script src="~/js/canvasjs.min.js"></script>
+
+    <script>
+        window.onload = function () {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "Simple Line Chart"
+                },
+                axisY: {
+                    includeZero: false
+                },
+                axisX: {
+                    includeZero: false
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: eval("[" + data + "]")
+                }]
+            });
+            chart.render();
+
+        }
+    </script>
+ </body>
+</html>
