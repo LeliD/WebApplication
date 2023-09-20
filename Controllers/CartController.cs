@@ -52,21 +52,18 @@ namespace WebApplicationIceCreamProject.Controllers
                 flavours.Add(flavour);
             }
 
-            var model = new CartView
+            var cart = new CartView
             {
                 CartItems = cartItems,
                 Flavours = flavours
             };
+            Order order = new Order() { Products = cart.CartItems, Total= cart.Total() };
 
-            return View(model);
+            // To open a view from a different controller
+            return View("~/Views/Orders/Checkout.cshtml", order);
         }
 
-        public IActionResult ThankYou()
-        {
-            return View();
-        }
-
-        public async Task AddToCart(int id/*, double size*/)
+        public async Task AddToCart(int id, double size)
         {
             ShoppingCartId = GetCartId();
 
@@ -84,8 +81,8 @@ namespace WebApplicationIceCreamProject.Controllers
                     CartId = ShoppingCartId,
                     Quantity = 1,
                     DateCreated = DateTime.Now,
-                    /*Size= size,
-                    Price= size*GetFlavourById(id).Price*/
+                    Size = size,
+                    Price = size * GetFlavourById(id).Price
                 };
 
                 _db.ShoppingCartItems.Add(cartItem);
@@ -93,7 +90,9 @@ namespace WebApplicationIceCreamProject.Controllers
             else
             {
                 // If the item exists in the cart, increment the quantity.
-                cartItem.Quantity++;
+                cartItem.Size += size;
+                cartItem.Price += size * GetFlavourById(id).Price;
+                cartItem.Price.ToString("F3");
             }
             try { await _db.SaveChangesAsync(); }
             catch (Exception ex) { }
