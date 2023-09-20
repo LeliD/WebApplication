@@ -1,5 +1,15 @@
 ﻿namespace WebApplicationIceCreamProject.Models
 {
+    public enum DayOfWeek
+    {
+        Sunday,
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday
+    }
     public class Order
     {
         public int Id { get; set; }
@@ -13,6 +23,6 @@
         public DateTime Date { get; set; }
         public double FeelsLike { get; set; }
         public double Humidity { get; set; }//לחות
-        public double Pressure { get; set; }//לחץ אויר
-    }
+        public double Pressure { get; set; }//לחץ אויר
+    }
 }
