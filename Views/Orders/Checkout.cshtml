@@ -1,0 +1,123 @@
+﻿@model Order
+@{
+	ViewData["Title"] = "Checkout";
+	Layout = "~/Views/Shared/_BasicLayout.cshtml";
+}
+
+<main>
+	<!-- Breadcrumb Start-->
+	<div class="page-notification">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb justify-content-center">
+							<li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+							<li class="breadcrumb-item"><a asp-action="Index">Cart</a></li>
+							<li class="breadcrumb-item"><a href="#">Checkout</a></li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="site-section">
+		<div class="container">
+			<form asp-controller="Orders" asp-action="CreateOrder" method="post">
+				@Html.AntiForgeryToken()
+				<div class="row">
+					<div class="col-md-6 mb-5 mb-md-0">
+						<h2 class="h3 mb-3 text-black">Billing Details</h2>
+						<div class="p-3 p-lg-5 border">
+							<div class="form-group row">
+								<div class="col-md-6">
+									<label asp-for="FirstName" class="text-black">First Name <span class="text-danger">*</span></label>
+									<input asp-for="FirstName" type="text" class="form-control" id="c_fname">
+								</div>
+								<div class="col-md-6">
+									<label asp-for="LastName" class="text-black">Last Name <span class="text-danger">*</span></label>
+									<input asp-for="LastName" type="text" class="form-control" id="c_lname">
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-12">
+									<label asp-for="City" class="text-black">Address <span class="text-danger">*</span></label>
+									<input asp-for="City" type="text" class="form-control" id="c_address" placeholder="City">
+								</div>
+							</div>
+							<div class="form-group">
+								<input asp-for="Street" type="text" class="form-control" placeholder="Street address">
+							</div>
+							<div class="form-group">
+								<input asp-for="HouseNumber" type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
+							</div>
+
+							<div class="form-group row mb-5">
+								<div class="col-md-6">
+									<label asp-for="Email" class="text-black">Email Address <span class="text-danger">*</span></label>
+									<input asp-for="Email" type="text" class="form-control" id="c_email_address">
+								</div>
+								<div class="col-md-6">
+									<label asp-for="PhoneNumber" class="text-black">Phone <span class="text-danger">*</span></label>
+									<input asp-for="PhoneNumber" type="text" class="form-control" id="c_phone" placeholder="Phone Number">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="c_order_notes" class="text-black">Order Notes</label>
+								<textarea class="form-control" id="c_order_notes" cols="30" rows="5" placeholder="Write your notes here..."></textarea>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="row mb-5">
+							<div class="col-md-12">
+								<h2 class="h3 mb-3 text-black">Your Order</h2>
+								<div class="p-3 p-lg-5 border">
+									<table class="table site-block-order-table mb-5">
+										<thead>
+										<th>Product</th>
+										<th>Total</th>
+										</thead>
+										<tbody>
+											@for (var i = 0; i < Model.Products.Count; i++)
+											{
+												var cartItem = Model.Products[i];
+												
+												<tr>
+													<td>@*@flavour.Name*@ <strong class="mx-2">x</strong> @cartItem.Size Liter</td>
+													<td>@cartItem.Price.ToString("F2")$</td>
+												</tr>
+
+											}
+											<tr>
+												<td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+												<td class="text-black font-weight-bold"><strong>@Model.Total.ToString("F2")$</strong></td>
+											</tr>
+										</tbody>
+									</table>
+									<label asp-for="Products" type="text" class="form-control" id="c_products" style="visibility:hidden;">@Model.Products</label>
+									<div class="border p-3 mb-5">
+										<h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsepaypal" role="button" aria-expanded="false" aria-controls="collapsepaypal">Paypal</a></h3>
+
+										<div class="collapse" id="collapsepaypal">
+											<div class="py-2">
+												<p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<input type="submit" value="Place Order" class="btn" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</main>
