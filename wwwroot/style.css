@@ -6486,8 +6486,10 @@ a.nav-link {
 
 /* -- Special Chocolate Section
 --------------------------------------------------------------*/
-.special-items{
-  background: url(images/special-item.jpg) no-repeat;
+.special-items {
+    background: url(images/special-item2.jpg) no-repeat;
+    background-size: cover;
+    
 }
 .special-items .item-content {
     display: flex;
@@ -6539,8 +6541,9 @@ a.magnific-popup:hover .overlay {
 
 /* -- Testimonial Section
 --------------------------------------------------------------*/
-.testimonials-wrap{
-    background: url(images/testimonial-bg.jpg);
+.testimonials-wrap {
+    background: url(images/testimonial-bg1.jpg);
+    background-size: contain;
     background-size: cover;
 }
 .testimonials-wrap .reviews-content{
@@ -6650,9 +6653,10 @@ a.magnific-popup:hover .overlay {
 
 /* - Page Banner Section
 --------------------------------------------------------------*/
-.site-banner{
-   background: url(images/banner5.jpg) no-repeat; 
-   height: 567px;
+.site-banner {
+    background: url(images/banner5.jpg) no-repeat;
+    background-size: cover;
+    height: 567px;
 }
 .site-banner .banner-content {
     display: flex;
