@@ -26,6 +26,7 @@
 	<div class="site-section">
 		<div class="container">
 			<form asp-controller="Orders" asp-action="CreateOrder" method="post">
+			@*	<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
 				@Html.AntiForgeryToken()
 				<div class="row">
 					<div class="col-md-6 mb-5 mb-md-0">
@@ -35,6 +36,7 @@
 								<div class="col-md-6">
 									<label asp-for="FirstName" class="text-black">First Name @*<span class="text-danger">*</span>*@</label>
 									<input asp-for="FirstName" type="text" class="form-control" id="c_fname">
+						@*			<span asp-validation-for="FirstName" class="text-danger"></span>*@
 								</div>
 								<div class="col-md-6">
 									<label asp-for="LastName" class="text-black">Last Name <span class="text-danger">*</span></label>
@@ -107,11 +109,12 @@
 											<tr>
 												<td class="text-black font-weight-bold"><strong>Order Total</strong></td>
 												<td class="text-black font-weight-bold"><strong>@Model.Total.ToString("F2")$</strong></td>
+												<input type="hidden" asp-for="Total" value="@Model.Total" />
 											</tr>
 										</tbody>
 									</table>
-									<label asp-for="Products" type="text" class="form-control" id="c_products" style="visibility:hidden;">@Model.Products</label>
-									<div class="border p-3 mb-5">
+									@*<label asp-for="Products" type="text" class="form-control" id="c_products" style="visibility:hidden;">@Model.Products</label>
+									*@<div class="border p-3 mb-5">
 										<h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsepaypal" role="button" aria-expanded="false" aria-controls="collapsepaypal">Paypal</a></h3>
 
 										<div class="collapse" id="collapsepaypal">

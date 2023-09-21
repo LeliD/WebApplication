@@ -52,7 +52,7 @@
 										<td>@cartItem.Size liter</td>
 
 										<td>@cartItem.Price.ToString("F2")</td>
-										<td><a href="#" class="genric-btn danger-border radius" width="20" height="20">X</a></td>
+										<td><a asp-action="RemoveFromCart" asp-route-id="@cartItem.ItemId" class="genric-btn danger-border radius" width="20" height="20">X</a></td>
 									</tr>
 								}
 							</tbody>

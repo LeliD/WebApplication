@@ -21,7 +21,7 @@ namespace WebApplicationIceCreamProject.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateOrder([Bind("Id,FirstName,LastName,PhoneNumber,Email,Street,City,HouseNumber,Products,Date,FeelsLike,Humidity,IsItHoliday,Day")] Order order)
+        public async Task<IActionResult> CreateOrder([Bind("Id,FirstName,LastName,PhoneNumber,Email,Street,City,HouseNumber,Products,Date,FeelsLike,Humidity,IsItHoliday,Day,Total")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -50,7 +50,7 @@ namespace WebApplicationIceCreamProject.Controllers
             }
 
             // Handle the case where the order is not found or doesn't have products
-            return RedirectToAction("Index", "Cart"); // Redirect to an error or fallback action
+            return RedirectToAction("Shop","Home"); // Redirect to an error or fallback action
         }
 
 
@@ -199,27 +199,27 @@ namespace WebApplicationIceCreamProject.Controllers
         //{
         //  return (_context.Order?.Any(e => e.Id == id)).GetValueOrDefault();
         //}
-        //public IActionResult Graph()
-        //{
-        //    return View();
-        //}
-        //public IActionResult ShowGraph(DateTime date1, DateTime date2)
-        //{
-        //    int counter = 1;
-        //    List<OrdersDate> temps = new List<OrdersDate>();
-        //    for (DateTime i = date1; i < date2; i = i.AddDays(1))//לבדוק שהדייט הראשון קטן מהשני!!!
-        //    {
-        //        OrdersDate t = new OrdersDate { Id = counter++, Day = i.Day, Month = i.Month, Counter = 0 };
+        public IActionResult Graph()
+        {
+            return View();
+        }
+        public IActionResult ShowGraph(DateTime date1, DateTime date2)
+        {
+            int counter = 1;
+            List<OrdersDate> temps = new List<OrdersDate>();
+            for (DateTime i = date1; i < date2; i = i.AddDays(1))//לבדוק שהדייט הראשון קטן מהשני!!!
+            {
+                OrdersDate t = new OrdersDate { Id = counter++, Day = i.Day, Month = i.Month, Counter = 0 };
 
-        //        foreach (var item in _context.Order)
-        //        {
-        //            if (item.Date.Day == i.Day && item.Date.Month == i.Month)
-        //                t.Counter++;//the number of orders in this date
-        //        }
-        //        temps.Add(t);
+                foreach (var item in _db.Order)
+                {
+                    if (item.Date.Day == i.Day && item.Date.Month == i.Month)
+                        t.Counter++;//the number of orders in this date
+                }
+                temps.Add(t);
 
-        //    }
-        //    return View(temps);
-        //}
+            }
+            return View(temps);
+        }
     }
 }
