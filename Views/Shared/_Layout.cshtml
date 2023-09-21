@@ -10,17 +10,38 @@
  <style>
         /* Change the color of links to pink */
         a {
-            color: pink;
+            color: #ce3c83;
+            transition: color 0.3s; /* Add a smooth color transition effect */
         }
 
         /* Change the background color of buttons to pink */
         .btn {
-            background-color: pink;
+            background-color: #ce3c83;
             color: white; /* Change text color to white for better visibility */
+            transition: background-color 0.3s, color 0.3s; /* Add smooth transition effects */
+            border: 2px solid transparent; /* Add a transparent border */
         }
+
+        /* Change link color to pink when hovering */
+        a:hover {
+            color: pink; /* Change to your desired pink color */
+            border-color: pink; /* Change border color to pink when hovering */
+        }
+
+        /* Change button color to pink when hovering */
+        .btn:hover {
+            background-color: pink; /* Change to your desired pink color */
+            color: white; /* You can keep the text color as white */
+            border-color: pink; /* Change border color to pink when hovering */
+        }
+
+        
         body {
-           /*background-color: #f9d3d3;*/
-            background-color: #f2dfe4;
+            background-color: #FFC0CB; /* Change to your desired pink color */
+        }
+
+        .header {
+            background-color: #FFC0CB; /* Change to your desired pink color */
         }
     </style>
     </head>

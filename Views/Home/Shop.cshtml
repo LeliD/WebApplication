@@ -28,8 +28,16 @@
 
 				@foreach (var item in Model) {
                 <div class="product-item col-md-3 pb-4 text-center">
-                    <a href=~/images/@Html.DisplayFor(modelItem => item.Image_URL) class="product-image"><img src=~/images/@Html.DisplayFor(modelItem => item.Image_URL)></a>
-                    <div class="text-comtent text-center">
+                   @* <a href=~/@Html.DisplayFor(modelItem => item.Image_URL) class="product-image"><img src=~/@Html.DisplayFor(modelItem => item.Image_URL)></a>*@
+                    @if (Uri.IsWellFormedUriString(item.Image_URL, UriKind.Absolute))
+                    {
+                        <a href="@Html.DisplayFor(modelItem => item.Image_URL)" class="product-image"><img src="@Html.DisplayFor(modelItem => item.Image_URL)"></a>
+                    }
+                    else
+                    {
+                        <a href="~/images/@Html.DisplayFor(modelItem => item.Image_URL)" class="product-image"><img src="~/images/@Html.DisplayFor(modelItem => item.Image_URL)"></a>
+                    }
+                   <div class="text-comtent text-center">
                         <h5 class="pt-4"><a href="single-product.html">@Html.DisplayFor(modelItem => item.Name)</a></h5>
                         <p> @Html.DisplayFor(modelItem => item.Description)</p>
                         <span class="price colored"> @Html.DisplayFor(modelItem => item.Price)$</span>  

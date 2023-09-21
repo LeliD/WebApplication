@@ -8,65 +8,44 @@
 
 <html>
 <head>
-    @*<link rel="stylesheet" type="text/css" href="~/css/Home.css" />*@
+    <title>Orders Per Day</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   @* <link rel="stylesheet" type="text/css" href="~/css/Home.css" />
     <meta name="viewport" content="width=device-width" />
     <title>ShowGraphbetweendates</title>
-
-
-
+*@
+    
 </head>
-<body onload="Show()">
-
-    @{
-        string values = string.Empty;
-    }
-    @foreach (var item in Model)
-    {
-        var val = item.Counter;
-        var val2 = item.Day;
-        var val3 = item.Month;
-        values += "{y:" + val + ",label:"+val2+"."+val3+"},";
-
-
-    }
-  @*  @{
-        var str = values.Remove(values.Length - 1, 1);
-    }*@
-    @{
-        var str = values;
-    }
-    <script>
-        var data ="@str";
-    </script>
-
-
-    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-
-    <script src="~/js/canvasjs.min.js"></script>
+<body style="background-color: pink;">
+    <canvas id="orderChart"></canvas>
 
     <script>
-        window.onload = function () {
+        var dates = @Html.Raw(Json.Serialize(Model.Select(x => x.Day + "/" + x.Month)));
+        var orderCounts = @Html.Raw(Json.Serialize(Model.Select(x => x.Counter)));
 
-            var chart = new CanvasJS.Chart("chartContainer", {
-                animationEnabled: true,
-                theme: "light2",
-                title: {
-                    text: "Simple Line Chart"
-                },
-                axisY: {
-                    includeZero: false
-                },
-                axisX: {
-                    includeZero: false
-                },
-                data: [{
-                    type: "column",
-                    dataPoints: eval("[" + data + "]")
+        var ctx = document.getElementById('orderChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Number of Orders',
+                    data: orderCounts,
+                    backgroundColor: '#ce3c83', // Change the fill color here,
                 }]
-            });
-            chart.render();
-
-        }
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Orders'
+                        }
+                    }
+                }
+            }
+        });
     </script>
- </body>
+</body>
 </html>
