@@ -5,11 +5,39 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_BasicLayout.cshtml";
 }
+<div class="shilat">
+    <div class="banner-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-content text-center">
+                        <span>@*<i class="icon icon-calendar mr-2"></i>*@ADMIN</span>
+                        <h2>Create a New Flavor Sensation</h2>
 
-<h1>Create</h1>
+                        <div class="breadcum-items mt-2">
+                            @*      <span class="item color-primary" style="font-size: 15px;"><a asp-action="Home">Home /</a></span>
+                            <span class="item color-primary" style="font-size: 15px;">Flavors</span>
+
+                            *@
+                            <span class="item" style="font-size: 17px;"><a asp-action="OpenPage">Home /</a></span>
+                            <span class="item" style="font-size: 17px;"><a asp-action="Index">Flavors /</a></span>
+                            <span class="item colored" style=" font-size: 17px;">Create</span>
+
+                        </div>
+                        <br />
+                        <br />
+                        <span class="item colored" style="font-size: 23px;">Add a Delicious New Flavor to Our Menu</span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--site-banner-->
+@*<h1>Create</h1>
 
 <h4>IceCream</h4>
-<hr />
+<hr />*@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -32,7 +60,7 @@
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
-               @* <span asp-validation-for="Price" class="text-danger"></span>*@
+                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -41,7 +69,27 @@
     </div>
 </div>
 
-<div>
+@*<div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
+@*<section class="blog_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
 
+
+            <h2>
+                <span>
+                    Hello @name1
+                </span>
+            </h2>
+
+        </div>
+        <p style="font-family:'Guttman Rashi'; font-size:25px">
+            Welcome to the users area of the new whipped cream website.<br>
+            Here you can add to the site everything you want, new flavors especially for our customers,<br>
+            changing details of existing flavors, promotions, orders placed, watching the prediction of <br>
+            buying ice cream and a sales graph.<br>
+            So come on let's get started ;)
+        </p>
+    </div>
+</section>*@

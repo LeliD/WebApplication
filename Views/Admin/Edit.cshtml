@@ -4,11 +4,39 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_BasicLayout.cshtml";
 }
+<div class="shilat">
+    <div class="banner-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-content text-center">
+                        <span>@*<i class="icon icon-calendar mr-2"></i>*@ADMIN</span>
+                        <h2>Edit @Model.Name Details</h2>
 
-<h1>Edit</h1>
+                        <div class="breadcum-items mt-2">
+                            @*      <span class="item color-primary" style="font-size: 15px;"><a asp-action="Home">Home /</a></span>
+                            <span class="item color-primary" style="font-size: 15px;">Flavors</span>
+
+                            *@
+                            <span class="item" style="font-size: 17px;"><a asp-action="OpenPage">Home /</a></span>
+                            <span class="item" style="font-size: 17px;"><a asp-action="Index">Flavors /</a></span>
+                            <span class="item colored" style=" font-size: 17px;">Edit</span>
+
+                        </div>
+                        <br />
+                        <br />
+                        <span class="item colored" style="font-size: 23px;">Modify Ice Cream Information</span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--site-banner-->
+@*<h1>Edit</h1>
 
 <h4>IceCream</h4>
-<hr />
+<hr />*@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -41,7 +69,7 @@
     </div>
 </div>
 
-<div>
+@*<div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 

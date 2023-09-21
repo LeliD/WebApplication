@@ -5,12 +5,44 @@
     Layout = "~/Views/Shared/_BasicLayout.cshtml";
 }
 
-<h1>Delete</h1>
+<div class="shilat">
+    <div class="banner-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-content text-center">
+                        <span>@*<i class="icon icon-calendar mr-2"></i>*@ADMIN</span>
+                        <h2>Delete Flavor</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>IceCream</h4>
-    <hr />
+                        <div class="breadcum-items mt-2">
+                            @*      <span class="item color-primary" style="font-size: 15px;"><a asp-action="Home">Home /</a></span>
+                            <span class="item color-primary" style="font-size: 15px;">Flavors</span>
+
+                            *@
+                            <span class="item" style="font-size: 17px;"><a asp-action="OpenPage">Home /</a></span>
+                            <span class="item" style="font-size: 17px;"><a asp-action="Index">Flavors /</a></span>
+                            <span class="item colored" style=" font-size: 17px;">Delete</span>
+                      
+                        </div>
+                        <br />
+
+                       
+                        <span class="item colored" style="font-size: 20px;"><strong>Attention:</strong> You are about to remove this flavor</span>
+                        <br />
+                        <br />
+                        <span class="item colored" style="font-size: 22px;"><strong>Are you sure you want to delete this?</strong></span>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--site-banner-->
+
+@*<h3>Are you sure you want to delete this?</h3>*@
+<div style="margin-left: 10px;">
+    @*<h4>IceCream</h4>
+    <hr />*@
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -21,8 +53,9 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Image_URL)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image_URL)
+        <dd class="col-sm-10">
+          
+            <a href="#" class="product-image"><img width="100" height="100" src="~/images/@Model.Image_URL"></a>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
@@ -40,7 +73,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Delete" class="btn btn-danger" /> 
+      @*  <a asp-action="Index">Back to List</a>*@
     </form>
 </div>

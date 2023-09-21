@@ -1,0 +1,339 @@
+﻿@model IEnumerable<WebApplicationIceCreamProject.Models.Order>
+
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1> רגיל
+
+<table class="table">
+	<thead>
+		<tr style="color:#ce3c83;" class="text-center">
+			<th>FirstName</th>
+			<th>@Html.DisplayNameFor(model => model.LastName)</th>
+			<th>
+				@Html.DisplayNameFor(model => model.PhoneNumber)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Email)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Street)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.City)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.HouseNumber)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Date)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.FeelsLike)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Humidity)
+			</th>
+
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr class="text-center">
+				<td >
+					@Html.DisplayFor(modelItem => item.FirstName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.LastName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.PhoneNumber)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Email)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Street)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.City)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.HouseNumber)
+				</td>
+
+				<td>
+					@Html.DisplayFor(modelItem => item.Date)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.FeelsLike)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Humidity)
+				</td>
+
+				<td>
+					|<a asp-action="Details" asp-route-id="@item.Id"><strong>Details</strong></a> |
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+@*<div class="table-responsive"> ציפורה
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Date</th>
+				<th>Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var order in Model)
+			{
+				<tr>
+					<td class="text-center">@order.Id</td>
+					<td class="text-center">@order.FirstName</td>
+					<td class="text-center">@order.LastName</td>
+					<td class="text-center">@order.Date.Day/@order.Date.Month/@order.Date.Year</td>
+					<td><span class="text-success">@order.Total.ToString("F2")$</span></td>
+					<td>
+						<a asp-action="Edit" asp-route-id="@order.Id">Edit</a> |
+						<a asp-action="Details" asp-route-id="@order.Id">Details</a> |
+						<a asp-action="Delete" asp-route-id="@order.Id">Delete</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>*@
+
+
+
+@*<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Modernize Free</title>
+	<link rel="shortcut icon" type="image/png" href="~/assets/images/logos/favicon.png" />
+	<link rel="stylesheet" href="~/assets/css/styles.min.css" />
+</head>*@
+@*	<div class="col-lg-8 d-flex align-items-stretch">
+		<div class="card w-100">
+			<div class="card-body p-4">
+				<h5 class="card-title fw-semibold mb-4">Recent Transactions</h5>
+				<div class="table-responsive">
+					<table class="table text-nowrap mb-0 align-middle">
+						<thead class="text-dark fs-4">
+							<tr>
+								<th class="border-bottom-0">
+									<h6 class="fw-semibold mb-0">Id</h6>
+								</th>
+								<th class="border-bottom-0">
+									<h6 class="fw-semibold mb-0">Assigned</h6>
+								</th>
+								<th class="border-bottom-0">
+									<h6 class="fw-semibold mb-0">Name</h6>
+								</th>
+								<th class="border-bottom-0">
+									<h6 class="fw-semibold mb-0">Priority</h6>
+								</th>
+								<th class="border-bottom-0">
+									<h6 class="fw-semibold mb-0">Budget</h6>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="border-bottom-0"><h6 class="fw-semibold mb-0">1</h6></td>
+								<td class="border-bottom-0">
+									<h6 class="fw-semibold mb-1">Sunil Joshi</h6>
+									<span class="fw-normal">Web Designer</span>
+								</td>
+								<td class="border-bottom-0">
+									<p class="mb-0 fw-normal">Elite Admin</p>
+								</td>
+								<td class="border-bottom-0">
+									<div class="d-flex align-items-center gap-2">
+										<span class="badge bg-primary rounded-3 fw-semibold">Low</span>
+									</div>
+								</td>
+								<td class="border-bottom-0">
+									<h6 class="fw-semibold mb-0 fs-4">$3.9</h6>
+								</td>
+							</tr>
+							<tr>
+								<td class="border-bottom-0"><h6 class="fw-semibold mb-0">2</h6></td>
+								<td class="border-bottom-0">
+									<h6 class="fw-semibold mb-1">Andrew McDownland</h6>
+									<span class="fw-normal">Project Manager</span>
+								</td>
+								<td class="border-bottom-0">
+									<p class="mb-0 fw-normal">Real Homes WP Theme</p>
+								</td>
+								<td class="border-bottom-0">
+									<div class="d-flex align-items-center gap-2">
+										<span class="badge bg-secondary rounded-3 fw-semibold">Medium</span>
+									</div>
+								</td>
+								<td class="border-bottom-0">
+									<h6 class="fw-semibold mb-0 fs-4">$24.5k</h6>
+								</td>
+							</tr>
+							<tr>
+								<td class="border-bottom-0"><h6 class="fw-semibold mb-0">3</h6></td>
+								<td class="border-bottom-0">
+									<h6 class="fw-semibold mb-1">Christopher Jamil</h6>
+									<span class="fw-normal">Project Manager</span>
+								</td>
+								<td class="border-bottom-0">
+									<p class="mb-0 fw-normal">MedicalPro WP Theme</p>
+								</td>
+								<td class="border-bottom-0">
+									<div class="d-flex align-items-center gap-2">
+										<span class="badge bg-danger rounded-3 fw-semibold">High</span>
+									</div>
+								</td>
+								<td class="border-bottom-0">
+									<h6 class="fw-semibold mb-0 fs-4">$12.8k</h6>
+								</td>
+							</tr>
+							<tr>
+								<td class="border-bottom-0"><h6 class="fw-semibold mb-0">4</h6></td>
+								<td class="border-bottom-0">
+									<h6 class="fw-semibold mb-1">Nirav Joshi</h6>
+									<span class="fw-normal">Frontend Engineer</span>
+								</td>
+								<td class="border-bottom-0">
+									<p class="mb-0 fw-normal">Hosting Press HTML</p>
+								</td>
+								<td class="border-bottom-0">
+									<div class="d-flex align-items-center gap-2">
+										<span class="badge bg-success rounded-3 fw-semibold">Critical</span>
+									</div>
+								</td>
+								<td class="border-bottom-0">
+									<h6 class="fw-semibold mb-0 fs-4">$2.4k</h6>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
+		<script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="~/assets/js/sidebarmenu.js"></script>
+		<script src="~/assets/js/app.min.js"></script>
+		<script src="~/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+		<script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
+	    <script src="~/assets/js/dashboard.js"></script>
+	
+	</div>*@
+	
+	
+	@*<div class="table-responsive scrollbar">
+	<table class="table table-hover table-striped overflow-hidden">
+	<thead>
+	<tr>
+	<th scope="col">Name</th>
+	<th scope="col">Email</th>
+	<th scope="col">Phone</th>
+	<th scope="col">Address</th>
+	<th scope="col">Status</th>
+	<th class="text-end" scope="col">Amount</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr class="align-middle">
+	<td class="text-nowrap">
+	<div class="d-flex align-items-center">
+	<div class="avatar avatar-xl">
+	<img class="rounded-circle" src="../../assets/img/team/4.jpg" alt="" />
+	</div>
+	<div class="ms-2">Ricky Antony</div>
+	</div>
+	</td>
+	<td class="text-nowrap">ricky@example.com</td>
+	<td class="text-nowrap">(201) 200-1851</td>
+	<td class="text-nowrap">2392 Main Avenue, Penasauka</td>
+	<td><span class="badge badge rounded-pill d-block p-2 badge-subtle-success">Completed<span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span></span></td>
+	<td class="text-end">$99</td>
+	</tr>
+	<tr class="align-middle">
+	<td class="text-nowrap">
+	<div class="d-flex align-items-center">
+	<div class="avatar avatar-xl">
+	<img class="rounded-circle" src="../../assets/img/team/13.jpg" alt="" />
+	</div>
+	<div class="ms-2">Emma Watson</div>
+	</div>
+	</td>
+	<td class="text-nowrap">emma@example.com</td>
+	<td class="text-nowrap">(212) 228-8403</td>
+	<td class="text-nowrap">2289 5th Avenue, New York</td>
+	<td><span class="badge badge rounded-pill d-block p-2 badge-subtle-success">Completed<span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span></span></td>
+	<td class="text-end">$199</td>
+	</tr>
+	<tr class="align-middle">
+	<td class="text-nowrap">
+	<div class="d-flex align-items-center">
+	<div class="avatar avatar-xl">
+	<div class="avatar-name rounded-circle"><span>RA</span></div>
+	</div>
+	<div class="ms-2">Rowen Atkinson</div>
+	</div>
+	</td>
+	<td class="text-nowrap">rown@example.com</td>
+	<td class="text-nowrap">(201) 200-1851</td>
+	<td class="text-nowrap">112 Bostwick Avenue, Jersey City</td>
+	<td><span class="badge badge rounded-pill d-block p-2 badge-subtle-primary">Processing<span class="ms-1 fas fa-redo" data-fa-transform="shrink-2"></span></span></td>
+	<td class="text-end">$755</td>
+	</tr>
+	<tr class="align-middle">
+	<td class="text-nowrap">
+	<div class="d-flex align-items-center">
+	<div class="avatar avatar-xl">
+	<img class="rounded-circle" src="../../assets/img/team/2.jpg" alt="" />
+	</div>
+	<div class="ms-2">Antony Hopkins</div>
+	</div>
+	</td>
+	<td class="text-nowrap">antony@example.com</td>
+	<td class="text-nowrap">(901) 324-3127</td>
+	<td class="text-nowrap">3448 Ile De France St #242</td>
+	<td><span class="badge badge rounded-pill d-block p-2 badge-subtle-secondary">On Hold<span class="ms-1 fas fa-ban" data-fa-transform="shrink-2"></span></span></td>
+	<td class="text-end">$50</td>
+	</tr>
+	<tr class="align-middle">
+	<td class="text-nowrap">
+	<div class="d-flex align-items-center">
+	<div class="avatar avatar-xl">
+	<img class="rounded-circle" src="../../assets/img/team/3.jpg" alt="" />
+	</div>
+	<div class="ms-2">Jennifer Schramm</div>
+	</div>
+	</td>
+	<td class="text-nowrap">jennifer@example.com</td>
+	<td class="text-nowrap">(828) 382-9631</td>
+	<td class="text-nowrap">659 Hannah Street, Charlotte</td>
+	<td><span class="badge badge rounded-pill d-block p-2 badge-subtle-warning">Pending<span class="ms-1 fas fa-stream" data-fa-transform="shrink-2"></span></span></td>
+	<td class="text-end">$150</td>
+	</tr>
+	</tbody>
+	</table>
+	</div>*@
+
+
+
+
+
+
+
+
+	
