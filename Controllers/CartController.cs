@@ -178,5 +178,19 @@ namespace WebApplicationIceCreamProject.Controllers
         {
             return GetFlavourById(id).Name;
         }
+        public async Task<IActionResult> RemoveFromCart(string id)
+        {
+            ShoppingCartId = GetCartId();
+
+            var cartItem = await _db.ShoppingCartItems.SingleOrDefaultAsync(
+              c => c.CartId == ShoppingCartId && c.ItemId == id);
+
+            if (cartItem != null)
+            {
+                _db.ShoppingCartItems.Remove(cartItem);
+                await _db.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
