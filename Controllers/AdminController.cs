@@ -181,9 +181,16 @@ namespace WebApplicationIceCreamProject.Controllers
         }
         public IActionResult ShowGraph(DateTime date1, DateTime date2)
         {
+            // Check if date1 is greater than date2, and swap them if necessary
+            if (date1 > date2)
+            {
+                DateTime temp = date1;
+                date1 = date2;
+                date2 = temp;
+            }
             int counter = 1;
             List<OrdersDate> temps = new List<OrdersDate>();
-            for (DateTime i = date1; i < date2; i = i.AddDays(1))//לבדוק שהדייט הראשון קטן מהשני!!!
+            for (DateTime i = date1; i <= date2; i = i.AddDays(1))
             {
                 OrdersDate t = new OrdersDate { Id = counter++, Day = i.Day, Month = i.Month, Counter = 0 };
 

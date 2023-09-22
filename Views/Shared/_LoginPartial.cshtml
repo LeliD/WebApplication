@@ -16,24 +16,35 @@
 
     // Use regex to extract the name part
     string name1 = System.Text.RegularExpressions.Regex.Match(emailAddress, "^[A-Za-z]+").Value;
-
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @name1</a>
+        </li>
+        
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @name1</a>
+           <form class="form-inline" asp-area="" asp-controller="Admin" asp-action="Index">
+                <button type="submit" class="nav-link btn btn-link text-dark">Home</button>
+            </form>
     </li>
+     
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                <button type="submit" class="nav-link btn btn-link text-dark" style="margin-left: 10px;">Logout</button>
         </form>
     </li>
 }
 else
 {
+        
     @*<li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>*@
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
         </li>
-        
+    <li class="nav-item">
+               <form class="form-inline" asp-area="" asp-controller="Home" asp-action="Index">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Home</button>
+                </form>
+        </li>
     }
 </ul>
