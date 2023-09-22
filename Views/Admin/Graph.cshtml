@@ -2,7 +2,39 @@
     ViewData["Title"] = "Graph";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<div class="shilat" style="height: 650px">
+    <div class="banner-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-content text-center">
+                        <span>@*<i class="icon icon-calendar mr-2"></i>*@ADMIN</span>
+                        <h2>Monthly Orders Trend</h2>
+                        <h3>Total Orders Over Time</h3>
+                        <div class="breadcum-items mt-2">
+                            @*      <span class="item color-primary" style="font-size: 15px;"><a asp-action="Home">Home /</a></span>
+                            <span class="item color-primary" style="font-size: 15px;">Flavors</span>
 
+                            *@
+                            <span class="item" style="font-size: 17px;"><a asp-action="OpenPage">Home /</a></span>
+                            <span class="item colored" style=" font-size: 17px;">Graph</span>
+
+                        </div>
+                        <br />
+                        <br />
+                        <span class="item colored" style="font-size: 23px;">Fill in start and end dates </span>
+                       @* <p>Fill date start and date end</p>*@
+                        <form action="ShowGraph" method="get">
+                            <input type="date" name="date1" />
+                            <input type="date" name="date2" />
+                            <input type="submit" value="search" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--site-banner-->
 @*<head>
     <link rel="stylesheet" type="text/css" href="~/css/Home.css" />
 </head>*@
@@ -23,12 +55,12 @@
 						</div>
 				</div>
 				</div>*@
-<p>Fill date start and date end</p>
+@*<p>Fill date start and date end</p>
 <form action="ShowGraph" method="get">
     <input type="date" name="date1" />
     <input type="date" name="date2" />
     <input type="submit" value="search" />
-</form>
+</form>*@
 @*<form>
 	<label for="datepicker">Select a Date:</label>
 	<input type="date" id="datepicker" name="datepicker">

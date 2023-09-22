@@ -1,47 +1,89 @@
 ﻿@model WebApplicationIceCreamProject.Models.IceCream
 
 @{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_BasicLayout.cshtml";
+	ViewData["Title"] = "Details";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 
 <div class="shilat">
-    <div class="banner-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="text-content text-center">
-                        <span>@*<i class="icon icon-calendar mr-2"></i>*@ADMIN</span>
-                        <h2>@Model.Name</h2>
+	<div class="banner-content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="text-content text-center">
+						<span>@*<i class="icon icon-calendar mr-2"></i>*@ADMIN</span>
+						<h2>@Model.Name</h2>
 
-                        <div class="breadcum-items mt-2">
-                            @*      <span class="item color-primary" style="font-size: 15px;"><a asp-action="Home">Home /</a></span>
-                            <span class="item color-primary" style="font-size: 15px;">Flavors</span>
+						<div class="breadcum-items mt-2">
+							@*      <span class="item color-primary" style="font-size: 15px;"><a asp-action="Home">Home /</a></span>
+							<span class="item color-primary" style="font-size: 15px;">Flavors</span>
 
-                            *@
-                            <span class="item" style="font-size: 17px;"><a asp-action="OpenPage">Home /</a></span>
-                            <span class="item" style="font-size: 17px;"><a asp-action="Index">Flavors /</a></span>
-                            <span class="item colored" style=" font-size: 17px;">Details</span>
+							*@
+							<span class="item" style="font-size: 17px;"><a asp-action="OpenPage">Home /</a></span>
+							<span class="item" style="font-size: 17px;"><a asp-action="Index">Flavors /</a></span>
+							<span class="item colored" style=" font-size: 17px;">Details</span>
 
-                        </div>
-                       @* <br />*@
-                      
-                       @* <span class="item " style="font-size: 20px;">Treat Yourself to a Scoop of Happiness</span>
-                       *@ <br />
-                        <br />
-                        <span class="item color-primary"><a asp-action="Edit" style="font-size: 23px;">Edit @Model.Name</a></span>
+						</div>
+						@* <br />*@
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+						@* <span class="item " style="font-size: 20px;">Treat Yourself to a Scoop of Happiness</span>
+						*@ <br />
+						<br />
+						<span class="item color-primary"><a asp-action="Edit" style="font-size: 23px;">Edit @Model.Name</a></span>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div><!--site-banner-->
 
-<div style="margin-left: 10px;">
-    @*<h4>IceCream</h4>
-    <hr />*@
+<section class="bg-sand padding-large">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-6">
+				<a href="#" class="product-image"><img src="~/images/@Model.Image_URL"></a>
+			</div>
+
+			<div class="col-md-6 pl-5">
+				<div class="product-detail">
+					<h5 class="pt-4"><a href="#"> @Html.DisplayFor(model => model.Name)</a></h5>
+					<p>@Html.DisplayFor(model => model.Description)</p>
+					<span class="price colored"> @Html.DisplayFor(model => model.Price)$</span>
+					@*
+					<p>
+					Welcome to our delightful ice cream shop! Indulge in the rich flavors and creamy textures of our handcrafted ice creams. We take pride in creating the perfect treat for your taste buds.
+					</p>*@
+					<p>
+						Whether you're enjoying it in a cone, cup, or as a topping, our <strong class="colored">@Model.Name</strong> Ice Cream promises a delightful experience that captures the essence of summer in every bite. It's a flavor that never goes out of style and is loved by ice cream enthusiasts of all ages.
+					</p>
+
+					<p>
+						Indulge in the delightful world of our handcrafted ice creams. Each flavor is a unique masterpiece, carefully crafted to tantalize your taste buds and elevate your ice cream experience.
+					</p>
+					@*	<label for="delivery-date">Delivery Date</label>
+					<input type="text" id="delivery-date" class="input-text" name="delivery-date" placeholder="Delivery Date">
+					*@
+					<label class="screen-reader-text" for="qty">Black Forest Pastry Quantity</label>
+					@*<input type="number" id="qty" class="input-text qty text" step="1" min="1" max="" name="quantity" value="1" title="Qty" size="4" placeholder="" inputmode="numeric">
+					*@<!-- Size-->
+
+
+
+
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+@*<div style="margin-left: 10px;">
+
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -52,7 +94,7 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Image_URL)
         </dt>
-        <dd class = "col-sm-10"> 
+        <dd class = "col-sm-10">
             <a href="#" class="product-image"><img width="100" height="100" src="~/images/@Model.Image_URL"></a>
 		</dd>
         <dt class = "col-sm-2">
@@ -68,7 +110,7 @@
             @Html.DisplayFor(model => model.Price)
         </dd>
     </dl>
-</div>
+</div>*@
 @*<div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
