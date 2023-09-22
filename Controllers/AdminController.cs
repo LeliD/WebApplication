@@ -29,6 +29,7 @@ namespace WebApplicationIceCreamProject.Controllers
                           View(await _context.IceCream.ToListAsync()) :
                           Problem("Entity set 'AdminContext.IceCream'  is null.");
         }
+
         public async Task<IActionResult> OpenPage()
         {
             return View();
@@ -165,6 +166,36 @@ namespace WebApplicationIceCreamProject.Controllers
         private bool IceCreamExists(int id)
         {
           return (_context.IceCream?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        public async Task<IActionResult> OrdersList()
+        {
+            return _context.Order != null ?
+                        View(await _context.Order.ToListAsync()) :
+                        Problem("Entity set 'IceCreamContext.Order'  is null.");
+        }
+
+        public IActionResult Graph()
+        {
+            return View();
+        }
+        public IActionResult ShowGraph(DateTime date1, DateTime date2)
+        {
+            int counter = 1;
+            List<OrdersDate> temps = new List<OrdersDate>();
+            for (DateTime i = date1; i < date2; i = i.AddDays(1))//לבדוק שהדייט הראשון קטן מהשני!!!
+            {
+                OrdersDate t = new OrdersDate { Id = counter++, Day = i.Day, Month = i.Month, Counter = 0 };
+
+                foreach (var item in _context.Order)
+                {
+                    if (item.Date.Day == i.Day && item.Date.Month == i.Month)
+                        t.Counter++;//the number of orders in this date
+                }
+                temps.Add(t);
+
+            }
+            return View(temps);
         }
     }
 }

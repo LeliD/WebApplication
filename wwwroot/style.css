@@ -659,7 +659,7 @@ abbr {
   color: #151515;
 }
 .color-primary a{
-    color: #151515;
+    color:  #ce3c83;
 }
 .color-primary a:hover{
     color: #938e92;
@@ -6658,13 +6658,26 @@ a.magnific-popup:hover .overlay {
     background-size: cover;
     height: 567px;
 }
-.site-banner .banner-content {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    height: inherit;
-    text-align: center;
+    .site-banner .banner-content {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        height: inherit;
+        text-align: center;
+    }
+.shilat {
+    background: url(images/admin2.png);
+    background-size: cover;
+    height: 367px;
 }
+.shilat .banner-content {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        height: inherit;
+        text-align: center;
+ }
+
 
 /* - Our Team Section
 --------------------------------------------------------------*/

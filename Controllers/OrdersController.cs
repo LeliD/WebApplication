@@ -34,6 +34,7 @@ namespace WebApplicationIceCreamProject.Controllers
             }
             return View(order);
         }
+        
         //public IActionResult Checkout(Order order)
         //{
         //    return View(order);
@@ -59,13 +60,7 @@ namespace WebApplicationIceCreamProject.Controllers
             return View();
         }
 
-        // GET: Orders
-        //public async Task<IActionResult> Index()
-        //{
-        //      return _context.Order != null ? 
-        //                  View(await _context.Order.ToListAsync()) :
-        //                  Problem("Entity set 'IceCreamContext.Order'  is null.");
-        //}
+        //GET: Orders
 
         //// GET: Orders/Details/5
         //public async Task<IActionResult> Details(int? id)
@@ -199,27 +194,6 @@ namespace WebApplicationIceCreamProject.Controllers
         //{
         //  return (_context.Order?.Any(e => e.Id == id)).GetValueOrDefault();
         //}
-        public IActionResult Graph()
-        {
-            return View();
-        }
-        public IActionResult ShowGraph(DateTime date1, DateTime date2)
-        {
-            int counter = 1;
-            List<OrdersDate> temps = new List<OrdersDate>();
-            for (DateTime i = date1; i < date2; i = i.AddDays(1))//לבדוק שהדייט הראשון קטן מהשני!!!
-            {
-                OrdersDate t = new OrdersDate { Id = counter++, Day = i.Day, Month = i.Month, Counter = 0 };
-
-                foreach (var item in _db.Order)
-                {
-                    if (item.Date.Day == i.Day && item.Date.Month == i.Month)
-                        t.Counter++;//the number of orders in this date
-                }
-                temps.Add(t);
-
-            }
-            return View(temps);
-        }
+      
     }
 }
