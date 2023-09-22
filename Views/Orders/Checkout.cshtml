@@ -123,7 +123,40 @@
 											</div>
 										</div>
 									</div>
+                                 @* <div class="form-group">
+									<input type="button" value="PayPal HTML" href="~/payPal.html" class="btn" />
+								</div> *@
+								@* <div class="form-group">
+									<input type="button" value="PayPal HTML" onclick="window.location.href='@Url.Content("~/payPal.html")'" class="btn" />
+								</div> *@
+									<input type="hidden" id="totalPrice" value="@Model.Total" />
 
+									<div class="form-group">
+										<input type="button" value="PayPal HTML" onclick="redirectToPayPal()" class="btn" />
+									</div>
+
+									<script>
+										function redirectToPayPal() {
+											// Retrieve the total price from the hidden input field
+											var totalPrice = document.getElementById("totalPrice").value;
+
+											// Specify the URL of your PayPal HTML page
+											var paypalUrl = "/payPal.html";
+
+											// Append the total price as a query parameter
+											paypalUrl += "?total=" + totalPrice;
+
+											// Redirect to the PayPal HTML page with the total price
+											window.location.href = paypalUrl;
+										}
+									</script>
+
+
+								@* <div class="form-group">
+									<input type="button" value="PayPal HTML" onclick="window.location.href='~/payPal.html'" class="btn" />
+								</div>
+                                *@
+								@*  <a href="payPal.html">PayPal HTML</a> *@
 									<div class="form-group">
 										<input type="submit" value="Place Order" class="btn" />
 									</div>
