@@ -64,8 +64,8 @@
                                         <li class="nav-item text-hover"><a asp-controller="Home" asp-action="About" class="nav-link" data-effect="About Us">About us</a></li>
                                         <li class="nav-item text-hover"><a asp-controller="Home" asp-action="Contact" class="nav-link" data-effect="Contact">Contact us</a></li>
                                         <li class="nav-item text-hover"><a asp-controller="Home" asp-action="Shop" class="nav-link" data-effect="Shop">Shop</a></li>
-                                        <li class="nav-item text-hover"><a href="/blog.html" class="nav-link" data-effect="Blogs">Make Order</a></li>
-                                        <li class="nav-item text-hover"><a asp-area="Identity" asp-page="/Account/Login" class="nav-link" data-effect="Login">Login</a></li>
+                                        @* <li class="nav-item text-hover"><a href="/blog.html" class="nav-link" data-effect="Blogs">Make Order</a></li>*@
+                                       <li class="nav-item text-hover"><a asp-area="Identity" asp-page="/Account/Login" class="nav-link" data-effect="Login">Login</a></li>
                                         <li class="nav-item text-hover"><a asp-controller="Cart" asp-action="Index" class="nav-link" data-effect="About Us">Cart</a></li>
                                        
                                         <!-- <li class="nav-item text-hover"><a asp-area="Identity" asp-page="/Account/Register" class="nav-link" data-effect="Register">Register</a></li>-->
@@ -155,12 +155,12 @@
                                 <h4 class="widget-title">Our Work Time</h4>
                                 <div class="time-list d-flex">
                                     <ul class="list-unstyled mr-5">
-                                        <li>Monday - Friday</li>
-                                        <li>8:00am - 8:30 pm</li>
+                                        <li>Sunday - Friday</li>
+                                        <li>8:00am - 11:30 pm</li>
                                     </ul>
                                     <ul class="list-unstyled">
-                                        <li>Saturday - Sunday</li>
-                                        <li>10:00am - 16:00 pm</li>
+                                        <li>Saturday</li>
+                                        <li>9:00pm - 11:30 pm</li>
                                     </ul>
                                 </div>
                             </div>
@@ -173,7 +173,7 @@
                                     <ul class="list-unstyled">
                                         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                                         <li><a asp-controller="Home" asp-action="About">About us</a></li>
-                                        <li><a asp-controller="Home" asp-action="Index">Gallery</a></li>
+                                        @*<li><a asp-controller="Home" asp-action="Index">Gallery</a></li>*@
                                         <li><a asp-controller="Home" asp-action="Shop">Shop</a></li>
                                         <li><a asp-controller="Home" asp-action="Contact">Contact us</a></li>
                                     </ul>

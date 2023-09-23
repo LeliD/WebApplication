@@ -25,6 +25,9 @@ namespace WebApplicationIceCreamProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Set the Date property to the current date and time.
+                order.Date = DateTime.Now;
+
                 _db.Add(order);
                 await _db.SaveChangesAsync();
                 // After the order is successfully placed, set the TempData flag.

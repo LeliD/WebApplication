@@ -23,6 +23,8 @@
 		</div>
 	</div>*@
 <main>
+	<br> <!-- Insert a line break here -->
+
 	<div class="site-section">
 		<div class="container">
 			<form asp-controller="Orders" asp-action="CreateOrder" method="post">
@@ -132,7 +134,7 @@
 									<input type="hidden" id="totalPrice" value="@Model.Total" />
 
 									<div class="form-group">
-										<input type="button" value="PayPal HTML" onclick="redirectToPayPal()" class="btn" />
+										<input type="button" value="Proceed to payment" onclick="redirectToPayPal()" class="btn" />
 									</div>
 
 									<script>
