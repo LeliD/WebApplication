@@ -10,6 +10,7 @@ using WebApplicationIceCreamProject.Data;
 using WebApplicationIceCreamProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
+using WebApplicationIceCreamProject.Services;
 
 namespace WebApplicationIceCreamProject.Controllers
 {
@@ -66,8 +67,27 @@ namespace WebApplicationIceCreamProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Image_URL,Description,Price")] IceCream iceCream)
         {
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(iceCream);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
             if (ModelState.IsValid)
             {
+                // Construct the API URL by appending the Image_URL from the iceCream object
+                var apiUrl = $"https://localhost:7099/Image?imageUrl={Uri.EscapeDataString(iceCream.Image_URL)}";
+
+                // Call the ApiService to check if the image is ice cream
+                var apiService = new ApiService("acc_e0d8ec2b70f224f");
+                var isIceCream = await apiService.GetApiResponseAsync<bool>(apiUrl);
+
+                if (!isIceCream)
+                {
+                    ModelState.AddModelError(string.Empty, "The provided image is not recognized as ice cream.");
+                    return View(iceCream);
+                }
+
                 _context.Add(iceCream);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

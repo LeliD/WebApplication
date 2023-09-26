@@ -28,7 +28,7 @@
 	<div class="site-section">
 		<div class="container">
 			<form asp-controller="Orders" asp-action="CreateOrder" method="post">
-			@*	<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 				@Html.AntiForgeryToken()
 				<div class="row">
 					<div class="col-md-6 mb-5 mb-md-0">
