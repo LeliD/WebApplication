@@ -25,7 +25,10 @@ namespace WebApplicationIceCreamProject.Controllers
         public async Task<IActionResult> CreateOrder([Bind("Id,FirstName,LastName,PhoneNumber,Email,Street,City,HouseNumber,Products,Date,FeelsLike,Humidity,IsItHoliday,Day,Total")] Order order)
         {
             string orderJson = JsonSerializer.Serialize(order);
-
+            var orderItems = await _db.ShoppingCartItems.Where(item => item.CartId == CartController.ShoppingCartId).ToListAsync();
+            if (!orderItems.Any())
+                return RedirectToAction("Checkout", new { order = orderJson });
+            //order.Products = new List<CartItem>();
             if (ModelState.IsValid)
             {
                 // Set the Date property to the current date and time.
@@ -41,7 +44,7 @@ namespace WebApplicationIceCreamProject.Controllers
                     return RedirectToAction("Checkout", new { order = orderJson });
                 }
 
-                // Call the weather service
+                //Call the weather service
                 var weatherDataResponse = await GetWeatherDataAsync(order.City);
                 if (weatherDataResponse != null)
                 {
@@ -56,13 +59,20 @@ namespace WebApplicationIceCreamProject.Controllers
                     return RedirectToAction("Checkout", new { order = orderJson });
                 }
 
-                // Update the IsItHoliday property of the order by calling the holiday check service
+                //Update the IsItHoliday property of the order by calling the holiday check service
                 order.IsItHoliday = CheckHoliday(order.Date).Result;
 
 
                 _db.Add(order);
                 await _db.SaveChangesAsync();
+               
 
+                foreach (var item in orderItems)
+                {
+                    item.OrderId = order.Id;
+                }
+                await _db.SaveChangesAsync();
+                // After the order is successfully placed, set the TempData flag.
                 // After the order is successfully placed, set the TempData flag.
                 TempData["OrderCompleted"] = true;
                 

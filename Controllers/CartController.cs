@@ -11,7 +11,7 @@ namespace WebApplicationIceCreamProject.Controllers
 {
     public class CartController : Controller
     {
-        public string ShoppingCartId { get; set; }
+        public static string ShoppingCartId { get; set; } = "";
 
         public IceCreamContext _db = new IceCreamContext();
 
@@ -32,6 +32,7 @@ namespace WebApplicationIceCreamProject.Controllers
             {
                 var flavour = GetFlavourById(item.FlavourId);
                 flavours.Add(flavour);
+               
             }
 
             var model = new CartView
@@ -90,6 +91,7 @@ namespace WebApplicationIceCreamProject.Controllers
                     DateCreated = DateTime.Now,
                     Size = size,
                     Price = size * GetFlavourById(id).Price
+                   // OrderId=6
                 };
 
                 _db.ShoppingCartItems.Add(cartItem);

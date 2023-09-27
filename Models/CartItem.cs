@@ -18,6 +18,7 @@ namespace WebApplicationIceCreamProject.Models
         public System.DateTime DateCreated { get; set; }
 
         public int FlavourId { get; set; }
+        public int? OrderId { get; set; }
 
     }
 }
