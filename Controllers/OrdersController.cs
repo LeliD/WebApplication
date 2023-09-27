@@ -24,18 +24,18 @@ namespace WebApplicationIceCreamProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateOrder([Bind("Id,FirstName,LastName,PhoneNumber,Email,Street,City,HouseNumber,Products,Date,FeelsLike,Humidity,IsItHoliday,Day,Total")] Order order)
         {
-            string orderJson = JsonSerializer.Serialize(order);
+            //Check the order has products (the cart isn't empty)
             var orderItems = await _db.ShoppingCartItems.Where(item => item.CartId == CartController.ShoppingCartId).ToListAsync();
             if (!orderItems.Any())
-                return RedirectToAction("Checkout", new { order = orderJson });
-            //order.Products = new List<CartItem>();
+                return RedirectToAction("Checkout", new { order = JsonSerializer.Serialize(order) });
+            //Bind order's products to the entity order
+            order.Products=orderItems;
+            //For Checkout function,in case not valid
+            string orderJson = JsonSerializer.Serialize(order);
+         
             if (ModelState.IsValid)
             {
-                // Set the Date property to the current date and time.
-                order.Date = DateTime.Now;
-                // Set the Day property to the current day of week.
-                order.Day = (Models.DayOfWeek)DateTime.Now.DayOfWeek;
-
+                
                 // Call the address verification service
                 var isAddressValid = await VerifyAddressAsync(order.City, order.Street);
                 if (!isAddressValid)
@@ -61,26 +61,50 @@ namespace WebApplicationIceCreamProject.Controllers
 
                 //Update the IsItHoliday property of the order by calling the holiday check service
                 order.IsItHoliday = CheckHoliday(order.Date).Result;
-
+                // Set the Date property to the current date and time.
+                order.Date = DateTime.Now;
+                // Set the Day property to the current day of week.
+                order.Day = (Models.DayOfWeek)DateTime.Now.DayOfWeek;
 
                 _db.Add(order);
                 await _db.SaveChangesAsync();
                
-
                 foreach (var item in orderItems)
                 {
                     item.OrderId = order.Id;
                 }
                 await _db.SaveChangesAsync();
-                // After the order is successfully placed, set the TempData flag.
+             
                 // After the order is successfully placed, set the TempData flag.
                 TempData["OrderCompleted"] = true;
                 
-
+                //go to ThankYou
                 return RedirectToAction("ThankYou");
             }
+
+            //Order isn't valid
             return RedirectToAction("Checkout", new { order = orderJson });
 
+        }
+        public IActionResult Checkout(string order)
+        {
+            // Deserialize the order object
+            Order orderObject = JsonSerializer.Deserialize<Order>(order);
+
+            // Ensure the order has the necessary data, e.g., products
+            if (orderObject != null && orderObject.Products != null && orderObject.Products.Any())
+            {
+                return View(orderObject);
+            }
+
+            // Handle the case where the order is not found or doesn't have products
+            return RedirectToAction("Index", "Cart"); // Redirect to an error or fallback action
+        }
+
+
+        public IActionResult ThankYou()
+        {
+            return View();
         }
         // This method verifies if the provided address exists
         private async Task<bool> VerifyAddressAsync(string city, string street)
@@ -141,26 +165,7 @@ namespace WebApplicationIceCreamProject.Controllers
             }
         }
 
-        public IActionResult Checkout(string order)
-        {
-            // Deserialize the order object
-            Order orderObject = JsonSerializer.Deserialize<Order>(order);
-
-            // Ensure the order has the necessary data, e.g., products
-            if (orderObject != null && orderObject.Products != null && orderObject.Products.Any())
-            {
-                return View(orderObject);
-            }
-
-            // Handle the case where the order is not found or doesn't have products
-            return RedirectToAction("Shop","Home"); // Redirect to an error or fallback action
-        }
-
-
-        public IActionResult ThankYou()
-        {
-            return View();
-        }
+  
 
         //GET: Orders
 
