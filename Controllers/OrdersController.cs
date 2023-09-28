@@ -22,7 +22,7 @@ namespace WebApplicationIceCreamProject.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateOrder([Bind("Id,FirstName,LastName,PhoneNumber,Email,Street,City,HouseNumber,Products,Date,FeelsLike,Humidity,IsItHoliday,Day,Total")] Order order)
+        public async Task<IActionResult> Checkout([Bind("Id,FirstName,LastName,PhoneNumber,Email,Street,City,HouseNumber,Products,Date,FeelsLike,Humidity,IsItHoliday,Day,Total")] Order order)
         {
             //Check the order has products (the cart isn't empty)
             var orderItems = await _db.ShoppingCartItems.Where(item => item.CartId == CartController.ShoppingCartId).ToListAsync();
@@ -83,8 +83,8 @@ namespace WebApplicationIceCreamProject.Controllers
             }
 
             //Order isn't valid
-            return RedirectToAction("Checkout", new { order = orderJson });
-
+            //return RedirectToAction("Checkout", new { order = orderJson });
+            return View(order);
         }
         public IActionResult Checkout(string order)
         {

@@ -27,9 +27,9 @@
 
 	<div class="site-section">
 		<div class="container">
-			<form asp-controller="Orders" asp-action="CreateOrder" method="post">
+			<form asp-action="Checkout" method="post">
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-				@Html.AntiForgeryToken()
+				
 				<div class="row">
 					<div class="col-md-6 mb-5 mb-md-0">
 						<h2 class="h3 mb-3 text-black">Billing Details</h2>
@@ -38,11 +38,13 @@
 								<div class="col-md-6">
 									<label asp-for="FirstName" class="text-black">First Name @*<span class="text-danger">*</span>*@</label>
 									<input asp-for="FirstName" type="text" class="form-control" id="c_fname">
-						@*			<span asp-validation-for="FirstName" class="text-danger"></span>*@
+									<span asp-validation-for="FirstName" class="text-danger"></span>
 								</div>
 								<div class="col-md-6">
 									<label asp-for="LastName" class="text-black">Last Name <span class="text-danger">*</span></label>
 									<input asp-for="LastName" type="text" class="form-control" id="c_lname">
+									<span asp-validation-for="LastName" class="text-danger"></span>
+
 								</div>
 							</div>
 
@@ -50,23 +52,33 @@
 								<div class="col-md-12">
 									<label asp-for="City" class="text-black">Address <span class="text-danger">*</span></label>
 									<input asp-for="City" type="text" class="form-control" id="c_address" placeholder="City">
+									<span asp-validation-for="City" class="text-danger"></span>
+
 								</div>
 							</div>
 							<div class="form-group">
 								<input asp-for="Street" type="text" class="form-control" placeholder="Street address">
+								<span asp-validation-for="Street" class="text-danger"></span>
+
 							</div>
 							<div class="form-group">
 								<input asp-for="HouseNumber" type="number" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
+								<span asp-validation-for="HouseNumber" class="text-danger"></span>
+
 							</div>
 
 							<div class="form-group row mb-5">
 								<div class="col-md-6">
 									<label asp-for="Email" class="text-black">Email Address <span class="text-danger">*</span></label>
 									<input asp-for="Email" type="text" class="form-control" id="c_email_address">
+									<span asp-validation-for="Email" class="text-danger"></span>
+
 								</div>
 								<div class="col-md-6">
 									<label asp-for="PhoneNumber" class="text-black">Phone <span class="text-danger">*</span></label>
 									<input asp-for="PhoneNumber" type="text" class="form-control" id="c_phone" placeholder="Phone Number">
+									<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
 								</div>
 							</div>
 

@@ -30,11 +30,127 @@ namespace WebApplicationIceCreamProject.Controllers
                           View(await _context.IceCream.ToListAsync()) :
                           Problem("Entity set 'AdminContext.IceCream'  is null.");
         }
+        // GET: Orders/Edit/5
+        public async Task<IActionResult> EditOrder(int? id)
+        {
+            if (id == null || _context.Order == null)
+            {
+                return NotFound();
+            }
 
-        public async Task<IActionResult> OpenPage()
+            var order = await _context.Order.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return View(order);
+        }
+
+        // POST: Orders/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditOrder(int id, [Bind("Id,FirstName,LastName,PhoneNumber,Email,Street,City,HouseNumber,Products,Date,FeelsLike,Humidity,IsItHoliday,Day,Total")] Order order)
+        {
+            if (id != order.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(order);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!OrderExists(order.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(OrdersList));
+            }
+            return View(order);
+        }
+        private bool OrderExists(int id)
+        {
+            return (_context.Order?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+        public async Task<IActionResult> OrderDetails(int? id)
+        {
+            if (id == null || _context.Order == null)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Order
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            var orderItems = await _context.ShoppingCartItems.Where(item => item.OrderId == id).ToListAsync();
+            //Bind order's products to the entity order
+            order.Products = orderItems;
+
+            return View(order);
+        }
+        // GET: Orders/Delete/5
+        public async Task<IActionResult> DeleteOrder(int? id)
+        {
+            if (id == null || _context.Order == null)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Order
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return View(order);
+        }
+
+        // POST: Orders/Delete/5
+        [HttpPost, ActionName("DeleteOrder")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteOrder(int id)
+        {
+            if (_context.Order == null)
+            {
+                return Problem("Entity set 'IceCreamContext.Order'  is null.");
+            }
+            var order = await _context.Order.FindAsync(id);
+            if (order != null)
+            {
+                var orderItems = await _context.ShoppingCartItems.Where(item => item.OrderId == order.Id).ToListAsync();
+                foreach(var item in orderItems)
+                {
+                    _context.ShoppingCartItems.Remove(item);
+                    await _context.SaveChangesAsync();
+                }
+                _context.Order.Remove(order);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(OrdersList));
+        }
+
+        public IActionResult OpenPage()
         {
             return View();
         }
+
 
         // GET: Admin/Details/5
         public async Task<IActionResult> Details(int? id)

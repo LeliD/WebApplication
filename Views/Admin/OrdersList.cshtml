@@ -35,7 +35,7 @@
     </div>
 </div><!--site-banner-->
 
-<table class="table">
+<table class="table" style="background-color: #f5f5f5;">
 	<thead>
 		<tr style="color:#ce3c83;" class="text-center">
 			<th>FirstName</th>
@@ -58,13 +58,21 @@
 			<th>
 				@Html.DisplayNameFor(model => model.Date)
 			</th>
-			<th>
+			@*<th>
 				@Html.DisplayNameFor(model => model.FeelsLike)
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.Humidity)
+			</th>*@
+		@*	<th>
+				@Html.DisplayNameFor(model => model.IsItHoliday)
+			</th>*@
+			<th>
+				@Html.DisplayNameFor(model => model.Day)
 			</th>
-
+			<th>
+				@Html.DisplayNameFor(model => model.Total)
+			</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -97,16 +105,29 @@
 				<td>
 					@Html.DisplayFor(modelItem => item.Date)
 				</td>
-				<td>
+				@*<td>
 					@Html.DisplayFor(modelItem => item.FeelsLike)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Humidity)
 				</td>
-
 				<td>
-					|<a asp-action="Details" asp-route-id="@item.Id"><strong>Details</strong></a> |
+					@Html.DisplayFor(modelItem => item.IsItHoliday)
+				</td>*@
+				<td>
+					@Html.DisplayFor(modelItem => item.Day)
 				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Total)
+				</td>
+				<td>
+					<a asp-action="OrderDetails" asp-route-id="@item.Id"><strong>Details</strong></a> |
+					<a asp-action="EditOrder" asp-route-id="@item.Id"><strong>Edit</strong></a> |
+					<a asp-action="DeleteOrder" asp-route-id="@item.Id"><strong>Delete</strong></a>
+				</td>
+				@*<td>
+					
+				</td>*@
 			</tr>
 		}
 	</tbody>
