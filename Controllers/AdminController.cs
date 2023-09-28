@@ -11,17 +11,22 @@ using WebApplicationIceCreamProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 using WebApplicationIceCreamProject.Services;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebApplicationIceCreamProject.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly IceCreamContext _context;
 
-        public AdminController(IceCreamContext context)
+        private readonly IceCreamContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public AdminController(IceCreamContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
+        
 
         // GET: Admin
         public async Task<IActionResult> Index()
@@ -181,35 +186,90 @@ namespace WebApplicationIceCreamProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Image_URL,Description,Price")] IceCream iceCream)
+        public async Task<IActionResult> Create([Bind("Id,Name,Image_URL,Description,Price")] IceCream iceCream, IFormFile ImageFile)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    _context.Add(iceCream);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
-            if (ModelState.IsValid)
+            if (ImageFile != null && ImageFile.Length > 0)
             {
-                // Construct the API URL by appending the Image_URL from the iceCream object
-                var apiUrl = $"https://localhost:7099/Image?imageUrl={Uri.EscapeDataString(iceCream.Image_URL)}";
+                // Handle the case where the user uploads an image from the file explorer
+                // Generate a unique filename for the image
+                string uniqueFileName = $"{Guid.NewGuid().ToString()}_{DateTime.Now.Ticks}{Path.GetExtension(ImageFile.FileName)}.jpg";
 
-                // Call the ApiService to check if the image is ice cream
-                var apiService = new ApiService("acc_e0d8ec2b70f224f");
-                var isIceCream = await apiService.GetApiResponseAsync<bool>(apiUrl);
+                // Define the path where you want to save the image inside the wwwroot / images folder
+                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", uniqueFileName);
 
-                if (!isIceCream)
+                using (var fileStream = new FileStream(imagePath, FileMode.Create))
                 {
-                    ModelState.AddModelError(string.Empty, "The provided image is not recognized as ice cream.");
-                    return View(iceCream);
+                    await ImageFile.CopyToAsync(fileStream);
                 }
+
+                // Update the Image_URL property with the new path (relative to wwwroot)
+                iceCream.Image_URL = $"{uniqueFileName}";
 
                 _context.Add(iceCream);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            else if (!string.IsNullOrEmpty(iceCream.Image_URL))
+            {
+                // Handle the case where the user provides an image URL
+                var imageUrl = iceCream.Image_URL;
+                var isImageValid = await CheckIfImageIsValidAsync(imageUrl);
+
+                if (!isImageValid)
+                {
+                    ModelState.AddModelError(string.Empty, "The provided image URL is not valid or does not contain a recognized ice cream image.");
+                    return View(iceCream);
+                }
+
+                // Generate a unique filename for the image
+                string uniqueFileName = $"{Guid.NewGuid().ToString()}_{DateTime.Now.Ticks}.jpg";
+
+                // Define the path where you want to save the image inside the wwwroot / images folder
+                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", uniqueFileName);
+
+                // Download and save the image to the specified path
+                using (var httpClient = new HttpClient())
+                {
+                    var response = await httpClient.GetAsync(imageUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var contentStream = await response.Content.ReadAsStreamAsync();
+
+                        using (var fileStream = new FileStream(imagePath, FileMode.Create))
+                        {
+                            await contentStream.CopyToAsync(fileStream);
+                        }
+
+                        // Update the Image_URL property with the new path (relative to wwwroot)
+                        iceCream.Image_URL = $"{uniqueFileName}";
+
+                        _context.Add(iceCream);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Please provide either an image URL or upload an image.");
+                return View(iceCream);
+            }
+
+            // If ModelState is not valid, return the view with validation errors
             return View(iceCream);
         }
+
+
+        private async Task<bool> CheckIfImageIsValidAsync(string imageUrl)
+        {
+            //Implement your logic to check if the image is valid(e.g., using your ApiService).
+            //Return true if the image is valid, and false if it's not.
+            var apiService = new ApiService("acc_e0d8ec2b70f224f");
+            var isIceCream = await apiService.GetApiResponseAsync<bool>($"https://localhost:7099/Image?imageUrl={Uri.EscapeDataString(imageUrl)}");
+            return isIceCream;
+        }
+
 
         // GET: Admin/Edit/5
         public async Task<IActionResult> Edit(int? id)
