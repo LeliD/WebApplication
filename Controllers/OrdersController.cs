@@ -35,13 +35,14 @@ namespace WebApplicationIceCreamProject.Controllers
          
             if (ModelState.IsValid)
             {
-                
+
                 // Call the address verification service
                 var isAddressValid = await VerifyAddressAsync(order.City, order.Street);
+                
                 if (!isAddressValid)
                 {
                     ModelState.AddModelError(string.Empty, "The provided street or city does not exist.");
-                    return RedirectToAction("Checkout", new { order = orderJson });
+                    return View(order);
                 }
 
                 //Call the weather service
@@ -56,7 +57,7 @@ namespace WebApplicationIceCreamProject.Controllers
                 {
                     // Handle the case where weather data could not be retrieved
                     ModelState.AddModelError(string.Empty, "Failed to retrieve weather data for the specified city.");
-                    return RedirectToAction("Checkout", new { order = orderJson });
+                    return View(order);
                 }
 
                 //Update the IsItHoliday property of the order by calling the holiday check service
@@ -111,7 +112,7 @@ namespace WebApplicationIceCreamProject.Controllers
         {
             try
             {
-                var apiUrl = $"https://gatewayapi.somee.com/Address?city={Uri.EscapeDataString(city)}&street={Uri.EscapeDataString(street)}";
+                var apiUrl = $"http://gatewayapi.somee.com/Address?city={Uri.EscapeDataString(city)}&street={Uri.EscapeDataString(street)}";
 
                 var apiService = new ApiService("bf185c7f-1a4e-4662-88c5-fa118a244bda"); // API key
                 var addressVerificationResponse = await apiService.GetApiResponseAsync<bool>(apiUrl);
@@ -130,7 +131,7 @@ namespace WebApplicationIceCreamProject.Controllers
         {
             try
             {
-                var weatherApiUrl = $"https://gatewayapi.somee.com/Weather?city={Uri.EscapeDataString(city)}"; // Update the API URL
+                var weatherApiUrl = $"http://gatewayapi.somee.com/Weather?city={Uri.EscapeDataString(city)}"; // Update the API URL
 
                 var weatherService = new ApiService("412b7cc1240b95fe425658b14e486cf9"); // API key
                 var weatherDataResponse = await weatherService.GetApiResponseAsync<WeatherDataResponse>(weatherApiUrl);
@@ -149,7 +150,7 @@ namespace WebApplicationIceCreamProject.Controllers
         {
             try
             {
-                var dateApiUrl = $"https://gatewayapi.somee.com/DateCheck?y={date.Year}&m={date.Month}&d={date.Day}";
+                var dateApiUrl = $"http://gatewayapi.somee.com/DateCheck?y={date.Year}&m={date.Month}&d={date.Day}";
 
                 var dateService = new ApiService("111DFWDV"); // API key
                 var isItHolidayResponse = dateService.GetApiResponseAsync<bool>(dateApiUrl).Result;
