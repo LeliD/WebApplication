@@ -119,6 +119,12 @@
 						<input asp-for="HouseNumber" class="form-control" />
 						<span asp-validation-for="HouseNumber" class="text-danger"></span>
 					</div>
+					<input type="hidden" asp-for="Date" value="@Model.Date" />
+					<input type="hidden" asp-for="FeelsLike" value="@Model.FeelsLike" />
+					<input type="hidden" asp-for="Humidity" value="@Model.Humidity" />
+					<input type="hidden" asp-for="IsItHoliday" value="@Model.IsItHoliday" />
+					<input type="hidden" asp-for="Day" value="@Model.Day" />
+					<input type="hidden" asp-for="Total" value="@Model.Total" />
 					<div class="form-group">
 						<input type="submit" value="Save" class="btn btn-primary" />
 					</div>
