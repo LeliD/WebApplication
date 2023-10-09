@@ -62,7 +62,7 @@
 
 							</div>
 							<div class="form-group">
-								<input asp-for="HouseNumber" type="number" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
+								<input asp-for="HouseNumber" type="number" min="1" class="form-control" value="1">
 								<span asp-validation-for="HouseNumber" class="text-danger"></span>
 
 							</div>

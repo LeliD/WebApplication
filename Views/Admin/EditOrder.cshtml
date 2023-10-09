@@ -1,5 +1,4 @@
-﻿
-@model WebApplicationIceCreamProject.Models.Order
+﻿@model WebApplicationIceCreamProject.Models.Order
 
 @{
 	ViewData["Title"] = "EditOrder";
@@ -24,7 +23,7 @@
 							<span class="item colored" style=" font-size: 17px;">Edit</span>
 
 						</div>
-						
+
 						<br />
 						<span class="item colored" style="font-size: 23px;">Modify Order Information</span>
 						<p style="font-size: 16px; color: #333;">You are allowed to modify the following fields: First Name, Last Name, Phone Number, and Email.</p>
@@ -116,7 +115,7 @@
 					</div>
 					<div class="form-group">
 						<label asp-for="HouseNumber" class="control-label"></label>
-						<input asp-for="HouseNumber" class="form-control" />
+						<input asp-for="HouseNumber" type="number" min="1" class="form-control" >
 						<span asp-validation-for="HouseNumber" class="text-danger"></span>
 					</div>
 					<input type="hidden" asp-for="Date" value="@Model.Date" />
