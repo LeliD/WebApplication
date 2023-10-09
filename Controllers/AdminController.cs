@@ -266,7 +266,7 @@ namespace WebApplicationIceCreamProject.Controllers
             //Implement your logic to check if the image is valid(e.g., using your ApiService).
             //Return true if the image is valid, and false if it's not.
             var apiService = new ApiService("acc_e0d8ec2b70f224f");
-            var isIceCream = await apiService.GetApiResponseAsync<bool>($"https://localhost:7099/Image?imageUrl={Uri.EscapeDataString(imageUrl)}");
+            var isIceCream = await apiService.GetApiResponseAsync<bool>($"http://gatewayapi.somee.com/Image?imageUrl={Uri.EscapeDataString(imageUrl)}");
             return isIceCream;
         }
 
