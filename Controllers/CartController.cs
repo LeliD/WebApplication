@@ -27,6 +27,16 @@ namespace WebApplicationIceCreamProject.Controllers
         {
             var cartItems = GetCartItems();
             var flavours = new List<IceCream>();
+            if (!cartItems.Any())
+            {
+                ModelState.AddModelError(string.Empty, "The cart is empty.");
+                return View(new CartView
+                {
+                    CartItems = cartItems,
+                    Flavours = flavours
+                });
+            }
+           
 
             foreach (var item in cartItems)
             {
@@ -46,6 +56,16 @@ namespace WebApplicationIceCreamProject.Controllers
         public async Task<IActionResult> Checkout()
         {
             var cartItems = GetCartItems();
+            //if (cartItems == null)
+            //{
+            //    ModelState.AddModelError(string.Empty, "The cart is empty.");
+            //    return View(order);
+            //}
+            //Handling the case the cart is empty, stay in the cart page
+            if (!cartItems.Any())
+            {
+                return RedirectToAction("Index");
+            }
             var flavours = new List<IceCream>();
 
             foreach (var item in cartItems)
@@ -66,7 +86,7 @@ namespace WebApplicationIceCreamProject.Controllers
             // Pass it as a route value
             return RedirectToAction("Checkout", "Orders", new { order = orderJson });
 
-            //return RedirectToAction("Checkout", "Orders", order);
+            return RedirectToAction("Checkout", "Orders", order);
             // To open a view from a different controller
             //return View("~/Views/Orders/Checkout.cshtml", order);
         }
