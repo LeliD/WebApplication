@@ -85,7 +85,7 @@
                         <a href="~/images/@Html.DisplayFor(modelItem => item.Image_URL)" class="product-image"><img src="~/images/@Html.DisplayFor(modelItem => item.Image_URL)"></a>
                     }
                    <div class="text-comtent text-center">
-                        <h5 class="pt-4"><a href="single-product.html">@Html.DisplayFor(modelItem => item.Name)</a></h5>
+                        <h5 class="pt-4"><a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a></h5>
                         <p> @Html.DisplayFor(modelItem => item.Description)</p>
                         <span class="price colored"> @Html.DisplayFor(modelItem => item.Price)$</span>  
                     </div>
