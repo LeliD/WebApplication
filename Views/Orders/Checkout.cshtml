@@ -27,7 +27,7 @@
 
 	<div class="site-section">
 		<div class="container">
-			<form asp-action="Checkout" method="post">
+			<form id="checkout-form" asp-action="Checkout" method="post">
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 				
 				<div class="row">
@@ -128,16 +128,99 @@
 										</tbody>
 									</table>
 									@*<label asp-for="Products" type="text" class="form-control" id="c_products" style="visibility:hidden;">@Model.Products</label>
-									*@<div class="border p-3 mb-5">
-										<h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsepaypal" role="button" aria-expanded="false" aria-controls="collapsepaypal">Paypal</a></h3>
+									*@
+									@if (TempData["OrderPayed"] as bool? != true)
+									{
+										<div class="border p-3 mb-5">
 
-										<div class="collapse" id="collapsepaypal">
-											<div class="py-2">
-												<p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-											</div>
+											<div id="paypal-button-container"></div>
+											<script data-sdk-integration-source="integrationbuilder_sc"
+												src="https://www.paypal.com/sdk/js?client-id=ASYdQ5LdXIPLfl3OCn_On5H1p3svAG9uwgvt3XNXzzTdzvkWo5yS-MSDI5PV_M1O1kFcdRkiLTKzmDhl&components=buttons"></script>
+
+											@using Newtonsoft.Json
+											<script>
+												const FUNDING_SOURCES = [
+													// EDIT FUNDING SOURCES
+													paypal.FUNDING.PAYPAL,
+													paypal.FUNDING.CARD
+												];
+												FUNDING_SOURCES.forEach(fundingSource => {
+													paypal.Buttons({
+														fundingSource,
+
+														style: {
+															layout: 'vertical',
+															shape: 'rect',
+															color: (fundingSource == paypal.FUNDING.PAYLATER) ? 'gold' : '',
+														},
+
+														createOrder: function (data, actions) {
+															var items = @Html.Raw(JsonConvert.SerializeObject((@Model.Products as IEnumerable <WebApplicationIceCreamProject.Models.CartItem>)!.Select(item => new
+															{
+															sku = (item.ItemId+100000000).ToString(),
+															quantity = 1,
+															name = "flavour "+(item.FlavourId).ToString(),
+															unit_amount = new
+															{
+															currency_code = "USD",
+															value = item.Price.ToString("0.00")
+															}
+															})));
+															return actions.order.create({
+																purchase_units: [
+																	{
+																		amount: {
+																			currency_code: 'USD',
+																			value: '@Model.Total.ToString("F2")',
+																			breakdown:
+																			{
+																				item_total:
+																				{
+																					currency_code: "USD",
+																					value: '@Model.Total.ToString("F2")'
+																				}
+																			}
+
+																		},
+																		items: items
+																	}
+																]
+
+															});
+
+														},
+														onApprove: function (data, actions) {
+															// Capture the funds from the transaction
+															return actions.order.capture().then(function (details) {
+																// Call your server to save the transaction
+																try {
+																	document.getElementById("checkout-form").submit();
+																}
+																catch (error) {
+																	console.error(error);
+																	// Handle the error or display an appropriate error message to the user
+																	alert('An error occurred while processing your payment. Please try again later.');
+																}
+
+															});
+														}
+
+
+
+													}).render("#paypal-button-container");
+												})
+											</script>
+
 										</div>
-									</div>
-                                 @* <div class="form-group">
+									}
+									@*Payment done, not all the fields valid*@
+									@if (TempData["OrderPayed"] as bool? == true)
+									{
+										<h3 class="text-danger">Payment succeded, One or more of the details feilds is missing/ incorrect</h3>
+										<button type="submit" name="tryAgain" value="true" class="btn">Try Again</button>
+									}
+
+									@* <div class="form-group">
 									<input type="button" value="PayPal HTML" href="~/payPal.html" class="btn" />
 								</div> *@
 								@* <div class="form-group">
@@ -145,7 +228,7 @@
 								</div> *@
 									<input type="hidden" id="totalPrice" value="@Model.Total" />
 
-									<div class="form-group">
+									@*<div class="form-group">
 										<input type="button" value="Proceed to payment" onclick="redirectToPayPal()" class="btn" />
 									</div>
 
@@ -163,7 +246,7 @@
 											// Redirect to the PayPal HTML page with the total price
 											window.location.href = paypalUrl;
 										}
-									</script>
+									</script>*@
 
 
 								@* <div class="form-group">
@@ -171,9 +254,9 @@
 								</div>
                                 *@
 								@*  <a href="payPal.html">PayPal HTML</a> *@
-									<div class="form-group">
+									@*<div class="form-group">
 										<input type="submit" value="Place Order" class="btn" />
-									</div>
+									</div>*@
 								</div>
 							</div>
 						</div>

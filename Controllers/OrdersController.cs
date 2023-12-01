@@ -82,10 +82,15 @@ namespace WebApplicationIceCreamProject.Controllers
                 //go to ThankYou
                 return RedirectToAction("ThankYou");
             }
-
-            //Order isn't valid
-            //return RedirectToAction("Checkout", new { order = orderJson });
-            return View(order);
+            //Payment done, not all the fields valid
+            else
+            {
+                TempData["OrderPayed"] = true;
+                //Order isn't valid
+                //return RedirectToAction("Checkout", new { order = orderJson });
+                return View(order);
+            }
+          
         }
         public IActionResult Checkout(string order)
         {

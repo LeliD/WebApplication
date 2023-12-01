@@ -65,8 +65,7 @@
 										<li class="nav-item text-hover"><a asp-controller="Admin" asp-action="Index" class="nav-link" data-effect="Flavors">Flavors</a></li>
 										<li class="nav-item text-hover"><a asp-controller="Admin" asp-action="OrdersList" class="nav-link" data-effect="Orders">Orders</a></li>
 										<li class="nav-item text-hover"><a asp-controller="Admin" asp-action="Graph" class="nav-link" data-effect="Gragh">Gragh</a></li>
-										<li class="nav-item text-hover"><a href="/blog.html" class="nav-link" data-effect="Blogs">Prediction</a></li>
-										<li class="nav-item">
+										<li class="nav-item text-hover"><a asp-controller="Admin" asp-action="PredictFlavor" class="nav-link" data-effect="Prediction">Prediction</a></li><li class="nav-item">
 											<a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
 										</li>
 
@@ -109,8 +108,8 @@
 					<div class="wrap flex-container">
 
 						<div class="col-md-3 footer-logo text-center mb-3">
-							<img src="~/images/main-logo.png" class="mb-3">
-							<p>Bakery is a free HTML CSS Template by Templates Jungle specially crafted for Bakeries.</p>
+							<img src="~/images/logo.png" class="mb-3" style="border-radius: 50%;">
+							<p>IceCream Delights - Savor the Sweet Moments</p>
 						</div>
 
 						<div class="col-md-5 mr-5 mb-3">
@@ -127,12 +126,12 @@
 								<h4 class="widget-title">Our Work Time</h4>
 								<div class="time-list d-flex">
 									<ul class="list-unstyled mr-5">
-										<li>Monday - Friday</li>
-										<li>8:00am - 8:30 pm</li>
+										<li>Sunday - Friday</li>
+										<li>8:00am - 11:30 pm</li>
 									</ul>
 									<ul class="list-unstyled">
-										<li>Saturday - Sunday</li>
-										<li>10:00am - 16:00 pm</li>
+										<li>Saturday</li>
+										<li>9:00pm - 11:30 pm</li>
 									</ul>
 								</div>
 							</div>
@@ -145,9 +144,8 @@
 									<ul class="list-unstyled">
 										<li><a asp-controller="Home" asp-action="Index">Home</a></li>
 										<li><a asp-controller="Home" asp-action="About">About us</a></li>
-										<li><a asp-controller="Home" asp-action="Index">Gallery</a></li>
+										@*<li><a asp-controller="Home" asp-action="Index">Gallery</a></li>*@
 										<li><a asp-controller="Home" asp-action="Shop">Shop</a></li>
-										<li><a href="/blog.html">Blogs</a></li>
 										<li><a asp-controller="Home" asp-action="Contact">Contact us</a></li>
 									</ul>
 								</div>
@@ -164,7 +162,7 @@
 			<div class="container">
 				<div class="wrap flex-container padding-small">
 					<div class="copyright">
-						<p class="mb-0">© 2021 Bakery HTML Template by <a href="https://templatesjungle.com/" target="_blank">Templates Jungle</a></p>
+						<p class="mb-0">© 2023 Deliciously Crafted with Love by <a href="https://templatesjungle.com/" target="_blank">IceCream Delights 🍦</a></p>
 					</div>
 					<div class="payment-card">
 						<span>We Accept:</span>
@@ -186,4 +184,3 @@
 
 </body>
 </html>
-
