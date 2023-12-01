@@ -6,33 +6,58 @@
 }
 
 <div class="shilat" style="height: 210px">
-    <div class="banner-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="text-content text-center">
-                        <span>@*<i class="icon icon-calendar mr-2"></i>*@ADMIN</span>
+	<div class="banner-content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="text-content text-center">
+						<span>@*<i class="icon icon-calendar mr-2"></i>*@ADMIN</span>
 						<h2>Total Orders</h2>
 
-                        <div class="breadcum-items mt-2">
-                            @*      <span class="item color-primary" style="font-size: 15px;"><a asp-action="Home">Home /</a></span>
-                            <span class="item color-primary" style="font-size: 15px;">Flavors</span>
+						<div class="breadcum-items mt-2">
+							@*      <span class="item color-primary" style="font-size: 15px;"><a asp-action="Home">Home /</a></span>
+							<span class="item color-primary" style="font-size: 15px;">Flavors</span>
 
-                            *@
-                            <span class="item" style="font-size: 17px;"><a asp-action="OpenPage">Home /</a></span>
-                          
+							*@
+							<span class="item" style="font-size: 17px;"><a asp-action="OpenPage">Home /</a></span>
+
 							<span class="item colored" style=" font-size: 17px;">Orders</span>
+							<div>
+								<button id="startConsumerButton" class="btn btn-primary">Start Kafka Consumer</button>
+							</div>
 
-                        </div>
-                   @*     <br />
-                        <br />
-                        <span class="item colored" style="font-size: 23px;">Add a Delicious New Flavor to Our Menu</span>*@
+						</div>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+						<!-- ... Your main content ... -->
+						<!-- Include JavaScript code to handle the button click -->
+						<script>
+							document.getElementById("startConsumerButton").addEventListener("click", function () {
+								// Send an AJAX request to start the Kafka consumer
+								fetch("/Kafka/StartSimulator", {
+									method: "POST"
+								})
+									.then(response => {
+										if (response.ok) {
+											alert("Kafka consumer started successfully.");
+										} else {
+											alert("Failed to start the Kafka consumer.");
+										}
+									})
+									.catch(error => {
+										console.error("Error:", error);
+										alert("An error occurred while starting the Kafka consumer.");
+									});
+							});
+						</script>
+						@*     <br />
+						<br />
+						<span class="item colored" style="font-size: 23px;">Add a Delicious New Flavor to Our Menu</span>*@
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div><!--site-banner-->
 
 <table class="table" style="background-color: #f5f5f5;">
@@ -59,13 +84,13 @@
 				@Html.DisplayNameFor(model => model.Date)
 			</th>
 			@*<th>
-				@Html.DisplayNameFor(model => model.FeelsLike)
+			@Html.DisplayNameFor(model => model.FeelsLike)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Humidity)
+			@Html.DisplayNameFor(model => model.Humidity)
 			</th>*@
-		@*	<th>
-				@Html.DisplayNameFor(model => model.IsItHoliday)
+			@*	<th>
+			@Html.DisplayNameFor(model => model.IsItHoliday)
 			</th>*@
 			<th>
 				@Html.DisplayNameFor(model => model.Day)
@@ -80,7 +105,7 @@
 		@foreach (var item in Model)
 		{
 			<tr class="text-center">
-				<td >
+				<td>
 					@Html.DisplayFor(modelItem => item.FirstName)
 				</td>
 				<td>
@@ -106,14 +131,14 @@
 					@Html.DisplayFor(modelItem => item.Date)
 				</td>
 				@*<td>
-					@Html.DisplayFor(modelItem => item.FeelsLike)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Humidity)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.IsItHoliday)
-				</td>*@
+			@Html.DisplayFor(modelItem => item.FeelsLike)
+			</td>
+			<td>
+			@Html.DisplayFor(modelItem => item.Humidity)
+			</td>
+			<td>
+			@Html.DisplayFor(modelItem => item.IsItHoliday)
+			</td>*@
 				<td>
 					@Html.DisplayFor(modelItem => item.Day)
 				</td>
@@ -126,12 +151,36 @@
 					<a asp-action="DeleteOrder" asp-route-id="@item.Id"><strong>Delete</strong></a>
 				</td>
 				@*<td>
-					
-				</td>*@
+
+			</td>*@
 			</tr>
 		}
 	</tbody>
 </table>
+@* @section scripts {
+	<script>
+		$(document).ready(function () {
+			$('#startSimulatorButton').click(function () {
+				// Make an AJAX request to start the Kafka simulator
+				$.ajax({
+					url: '@Url.Action("StartSimulator", "Kafka")', // Replace with your controller and action names
+					type: 'POST',
+					success: function () {
+						alert('Kafka Simulator started successfully.');
+					},
+					error: function () {
+						alert('Failed to start Kafka Simulator.');
+					}
+				});
+			});
+		});
+	</script>
+}
+
+<!-- Your button element -->
+ <button id="startSimulatorButton" class="btn btn-primary">Start Kafka Simulator</button>
+ *@
+
 @*<div class="table-responsive"> ציפורה
 	<table class="table table-hover">
 		<thead>
@@ -282,11 +331,11 @@
 		<script src="~/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
 		<script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
 	    <script src="~/assets/js/dashboard.js"></script>
-	
+
 	</div>*@
-	
-	
-	@*<div class="table-responsive scrollbar">
+
+
+@*<div class="table-responsive scrollbar">
 	<table class="table table-hover table-striped overflow-hidden">
 	<thead>
 	<tr>
@@ -385,4 +434,4 @@
 
 
 
-	
+
