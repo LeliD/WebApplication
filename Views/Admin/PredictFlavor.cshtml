@@ -1,0 +1,72 @@
+﻿@model WebApplicationIceCreamProject.Models.IceCreamPrediction
+@using WebApplicationIceCreamProject.Models
+@{
+    ViewData["Title"] = "PredictFlavor";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+@*<form asp-controller="Admin" asp-action="PredictFlavor" method="post" enctype="multipart/form-data">*@
+<form asp-action="PredictFlavor" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="City">City:</label>
+        <input asp-for="City" class="form-control" />
+    </div>
+   @* <div class="form-group">
+        <label asp-for="Season">Season:</label>
+        <input asp-for="Season" class="form-control" />
+    </div>*@
+    <div class="form-group">
+        <label asp-for="Season">Season:</label>
+        <select asp-for="Season" class="form-control">
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>
+            <option value="Fall">Fall</option>
+            <option value="Winter">Winter</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="FeelsLike">Feels Like:</label>
+        <input asp-for="FeelsLike" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Humidity">Humidity:</label>
+        <input asp-for="Humidity" class="form-control" />
+    </div>
+    @*<input type="hidden" asp-for="PredictedFlavor" value="@Model.PredictedFlavor" />*@
+    @*<div class="form-group">
+        <label asp-for="Weekday">Weekday:</label>
+        <select asp-for="Weekday" asp-items="Html.GetEnumSelectList<WebApplicationIceCreamProject.Models.DayOfWeek>()" class="form-control"></select>
+    </div>*@
+    <div class="form-group">
+        <label asp-for="Weekday">Weekday:</label>
+        <select asp-for="Weekday" class="form-control">
+            <option value="Sunday">Sunday</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+        </select>
+        <span asp-validation-for="Weekday" class="text-danger"></span>
+    </div>
+   @* <button type="submit" asp-controller="Admin" asp-action="PredictFlavor" method="post"  class="btn btn-primary">Predict Flavor</button>*@
+    <div class="form-group">
+        <input asp-for="PredictedFlavor" type="hidden" value=-1 />
+    </div>
+   @*<div class="form-group">
+        <input type="submit" value="PredictFlavor" class="btn btn-primary" />
+    </div>*@
+    <button type="submit" class="btn btn-primary">Predict Flavor</button>
+</form>
+@if (Model != null)
+{
+    <div class="form-group">
+        <label>Predicted Flavor:</label>
+        <span>@Model.PredictedFlavor</span>
+    </div>
+}
+
+</html>

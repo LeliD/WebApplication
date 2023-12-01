@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 using WebApplicationIceCreamProject.Services;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.ML;
+using Microsoft.ML.Data;
 
 namespace WebApplicationIceCreamProject.Controllers
 {
@@ -400,5 +402,160 @@ namespace WebApplicationIceCreamProject.Controllers
             }
             return View(temps);
         }
+        
+        public IActionResult PredictFlavor()
+        {
+           //Initialize a new IceCreamPredictionViewModel
+            //var model = new IceCreamPrediction();
+
+            //return View(model);
+            return View();
+        }
+        public static string GetSeason(DateTime date)
+        {
+            int month = date.Month;
+            if (month >= 3 && month <= 5)
+            {
+                return "Spring";
+            }
+            else if (month >= 6 && month <= 8)
+            {
+                return "Summer";
+            }
+            else if (month >= 9 && month <= 11)
+            {
+                return "Fall";
+            }
+            else
+            {
+                return "Winter";
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult PredictFlavor([Bind("City,Season,FeelsLike,Humidity,Weekday,PredictedFlavor")] IceCreamPrediction model)
+        {
+            if (ModelState.IsValid)
+            {
+                var mlContext = new MLContext();
+                // Step 1: Retrieve data from the database
+                var data = _context.Order
+                    .Select(order => new IceCreamPrediction
+                    {
+                        City = order.City,
+                        Season = GetSeason(order.Date), // You need to implement GetSeason
+                        FeelsLike = (float)order.FeelsLike,
+                        Humidity = (float)order.Humidity,
+                        //Weekday = order.Day,
+                        Weekday = order.Day.ToString(), // Convert the 'Day' to a string
+                        PredictedFlavor = (float)(order.Products != null && order.Products.Any()
+            ? order.Products
+                .OrderByDescending(item => item.Size)
+                .Select(item => item.FlavourId)
+                .FirstOrDefault()
+            : -1)
+
+                        //    PredictedFlavor = (order.Products != null && order.Products.Any())
+                        //? order.Products
+                        //    .OrderByDescending(item => item.Size)
+                        //    .Select(item => item.FlavourId)
+                        //    .FirstOrDefault() // Get the FlavourId of the item with the largest Size
+                        //    .ToString() // Convert it to a string
+                        //: "-1" // Provide a default string value or handle the case where there are no products
+                    })
+                    .ToList();
+                // Step 2: Prepare the data for prediction
+                //var iceCreamInput = new IceCreamPrediction
+                //{
+                //    City = model.City,
+                //    Season = model.Season,
+                //    FeelsLike = model.FeelsLike,
+                //    Humidity = model.Humidity,
+                //    Weekday = model.Weekday,
+                //    PredictedFlavor =2
+                //};
+                var iceCreamInput = new IceCreamPrediction
+                {
+                    City = model.City,
+                    Season = model.Season,
+                    FeelsLike = model.FeelsLike,
+                    Humidity = model.Humidity,
+                    Weekday = model.Weekday
+                };
+                if (data.Any())
+                {
+
+                    // Split the data into training and testing sets
+                    var dataSplit = mlContext.Data.TrainTestSplit(mlContext.Data.LoadFromEnumerable(data));
+                    // Define the model's pipeline
+                    //var pipeline = mlContext.Transforms.Conversion.MapValueToKey("PredictedFlavor")
+                    //    .Append(mlContext.Transforms.Concatenate("Features", "City", "Season", "FeelsLike", "Humidity", "Weekday"))
+                    //    .Append(mlContext.Transforms.NormalizeMinMax("Features"))
+                    //    .Append(mlContext.Transforms.Text.FeaturizeText("City"))
+                    //    .Append(mlContext.Transforms.Text.FeaturizeText("Season"))
+                    //    .Append(mlContext.Transforms.Text.FeaturizeText("Weekday"))
+                    //    .Append(mlContext.Transforms.Concatenate("Features", "Features", "City", "Season", "FeelsLike", "Humidity", "Weekday"))
+                    //    .Append(mlContext.Transforms.NormalizeMinMax("Features"))
+                    //    .Append(mlContext.Transforms.NormalizeMeanVariance("Features"))
+                    //    .Append(mlContext.Transforms.NormalizeMinMax("PredictedFlavor"))
+                    //    .Append(mlContext.Regression.Trainers.Sdca())
+                    //    .Append(mlContext.Transforms.Conversion.MapKeyToValue("PredictedFlavor"));
+                    var numericPipeline = mlContext.Transforms.Concatenate("NumericFeatures", "FeelsLike", "Humidity")
+    .Append(mlContext.Transforms.NormalizeMinMax("NumericFeatures"));
+
+                    var stringPipeline = mlContext.Transforms.Concatenate("StringFeatures", "City", "Season", "Weekday")
+                        .Append(mlContext.Transforms.Text.FeaturizeText("StringFeatures"))
+                        .Append(mlContext.Transforms.NormalizeMinMax("StringFeatures"));
+
+                    var pipeline = numericPipeline.Append(stringPipeline)
+                        .Append(mlContext.Transforms.Concatenate("Features", "NumericFeatures", "StringFeatures"))
+                        .Append(mlContext.Transforms.NormalizeMinMax("Features"))
+                        .Append(mlContext.Transforms.NormalizeMinMax("PredictedFlavor"))
+                        .Append(mlContext.Regression.Trainers.Sdca("PredictedFlavor"));
+
+
+                    // Train the model
+                    var modelML = pipeline.Fit(dataSplit.TrainSet);
+
+                    // Evaluate the model
+                    var testSetTransform = modelML.Transform(dataSplit.TestSet);
+                    //var metrics = mlContext.Regression.Evaluate(testSetTransform);
+                    //Console.WriteLine($"R-squared: {metrics.RSquared}");
+                    //Console.WriteLine($"Root Mean Squared Error: {metrics.RootMeanSquaredError}");
+
+                    // Save the trained model
+                    mlContext.Model.Save(modelML, null, "model.zip");
+                    // Make a prediction using the trained model
+                    var prediction = modelML.Transform(mlContext.Data.LoadFromEnumerable(new[] { iceCreamInput }));
+                    var flavor = mlContext.Data.CreateEnumerable<IceCreamPrediction>(prediction, reuseRowObject: false).First();
+
+                    // Update the PredictedFlavor property of the 'model'
+                    model.PredictedFlavor = flavor.PredictedFlavor;
+
+                    // You can use 'predictedFlavor' as needed
+                    Console.WriteLine($"Predicted Flavor: {model.PredictedFlavor}");
+                    // Step 3: Use the trained model to make predictions
+                    //var prediction = predictionEngine.Predict(iceCreamInput);
+
+                    // Step 4: Set the predicted flavor in the model
+                    //model.PredictedFlavor = prediction.Flavor;
+                }
+                else
+                {
+                    // Handle the case where no matching data was found in the database
+                    //model.PredictedFlavor = "Unknown";
+                    model.PredictedFlavor = -1;
+                }
+                // Rest of the prediction and view rendering logic
+                // ...// Use the input data (model.City, model.Season, model.FeelsLike, model.Humidity, model.Weekday)
+                // to make an ML.NET prediction for the flavor and update model.PredictedFlavor.
+                // Implement your ML.NET prediction logic here.
+                
+            }
+
+            return View(model);
+        }
+
     }
 }
