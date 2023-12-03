@@ -15,6 +15,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.ML;
 using Microsoft.ML.Data;
 
+using CsvHelper;
+using CsvHelper.Configuration;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using Microsoft.Extensions.Primitives;
+
 namespace WebApplicationIceCreamProject.Controllers
 {
     public class AdminController : Controller
@@ -431,13 +438,134 @@ namespace WebApplicationIceCreamProject.Controllers
                 return "Winter";
             }
         }
-
+        /**
+*  Predictor for PredictedFlavor from model/656b9b687411b4438b047f90
+*  Predictive model by BigML - Machine Learning Made Easy
+*/
+        private String Predictflavor(string city, string season, double? feelslike, double? humidity, string weekday)
+          {
+            if (humidity == null)
+            {
+                return "VANILLA STRABERRY";
+            }
+            if (humidity > 75)
+            {
+                if (feelslike == null)
+                {
+                    return "BANANA &amp; HONEY";
+                }
+                if (feelslike > 18.42)
+                {
+                    if (feelslike > 22.54)
+                    {
+                        return "BANANA &amp; HONEY";
+                    }
+                    if (feelslike <= 22.54)
+                    {
+                        return "BRAMBLEBERRY SORBET";
+                    }
+                }
+                if (feelslike <= 18.42)
+                {
+                    return "BANANA &amp; HONEY";
+                }
+            }
+            if (humidity <= 75)
+            {
+                if (feelslike == null)
+                {
+                    return "VANILLA STRABERRY";
+                }
+                if (feelslike > 18.205)
+                {
+                    if (city == null)
+                    {
+                        return "VANILLA STRABERRY";
+                    }
+                    if (city.Equals("בני ברק"))
+                    {
+                        if (feelslike > 25.2)
+                        {
+                            return "BRAMBLEBERRY SORBET";
+                        }
+                        if (feelslike <= 25.2)
+                        {
+                            return "OREO";
+                        }
+                    }
+                    if (!city.Equals("בני ברק"))
+                    {
+                        if (weekday == null)
+                        {
+                            return "VANILLA STRABERRY";
+                        }
+                        if (weekday.Equals("Wednesday"))
+                        {
+                            if (feelslike > 24.685)
+                            {
+                                return "CHERRY CHEESECAKE";
+                            }
+                            if (feelslike <= 24.685)
+                            {
+                                return "RASPBERRY SORBET";
+                            }
+                        }
+                        if (!weekday.Equals("Wednesday"))
+                        {
+                            if (weekday.Equals("Sunday"))
+                            {
+                                if (feelslike > 22.925)
+                                {
+                                    if (feelslike > 23.61)
+                                    {
+                                        return "VANILLA STRABERRY";
+                                    }
+                                    if (feelslike <= 23.61)
+                                    {
+                                        return "VANILLA STRABERRY";
+                                    }
+                                }
+                                if (feelslike <= 22.925)
+                                {
+                                    return "CHERRY CHEESECAKE";
+                                }
+                            }
+                            if (!weekday.Equals("Sunday"))
+                            {
+                                if (feelslike > 20.775)
+                                {
+                                    if (feelslike > 23.315)
+                                    {
+                                        return "LIME SORBET";
+                                    }
+                                    if (feelslike <= 23.315)
+                                    {
+                                        return "VANILLA STRABERRY";
+                                    }
+                                }
+                                if (feelslike <= 20.775)
+                                {
+                                    return "VANILLA STRABERRY";
+                                }
+                            }
+                        }
+                    }
+                }
+                if (feelslike <= 18.205)
+                {
+                    return "CHOCOLATE &amp; SEA SALT";
+                }
+            }
+            return "UnKnown";
+            }
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult PredictFlavor([Bind("City,Season,FeelsLike,Humidity,Weekday,PredictedFlavor")] IceCreamPrediction model)
         {
             if (ModelState.IsValid)
             {
+                var cartController = new CartController(_context);
                 var mlContext = new MLContext();
                 // Step 1: Retrieve data from the database
                 var data = _context.Order
@@ -449,108 +577,41 @@ namespace WebApplicationIceCreamProject.Controllers
                         Humidity = (float)order.Humidity,
                         //Weekday = order.Day,
                         Weekday = order.Day.ToString(), // Convert the 'Day' to a string
-                        PredictedFlavor = (float)(order.Products != null && order.Products.Any()
-            ? order.Products
-                .OrderByDescending(item => item.Size)
-                .Select(item => item.FlavourId)
-                .FirstOrDefault()
-            : -1)
-
-                        //    PredictedFlavor = (order.Products != null && order.Products.Any())
-                        //? order.Products
-                        //    .OrderByDescending(item => item.Size)
-                        //    .Select(item => item.FlavourId)
-                        //    .FirstOrDefault() // Get the FlavourId of the item with the largest Size
-                        //    .ToString() // Convert it to a string
-                        //: "-1" // Provide a default string value or handle the case where there are no products
+                        PredictedFlavor = (order.Products != null && order.Products.Any())
+                        ? order.Products
+                            .OrderByDescending(item => item.Size)
+                            .Select(item => item.FlavourId)
+                            .FirstOrDefault() // Get the FlavourId of the item with the largest Size
+                            .ToString() // Convert it to a string
+                        : "UnKnown" // Provide a default string value or handle the case where there are no products
                     })
                     .ToList();
-                // Step 2: Prepare the data for prediction
-                //var iceCreamInput = new IceCreamPrediction
-                //{
-                //    City = model.City,
-                //    Season = model.Season,
-                //    FeelsLike = model.FeelsLike,
-                //    Humidity = model.Humidity,
-                //    Weekday = model.Weekday,
-                //    PredictedFlavor =2
-                //};
-                var iceCreamInput = new IceCreamPrediction
+                // Iterate over the list and update PredictedFlavor for each item
+                foreach (var item in data)
                 {
-                    City = model.City,
-                    Season = model.Season,
-                    FeelsLike = model.FeelsLike,
-                    Humidity = model.Humidity,
-                    Weekday = model.Weekday
-                };
-                if (data.Any())
-                {
-
-                    // Split the data into training and testing sets
-                    var dataSplit = mlContext.Data.TrainTestSplit(mlContext.Data.LoadFromEnumerable(data));
-                    // Define the model's pipeline
-                    //var pipeline = mlContext.Transforms.Conversion.MapValueToKey("PredictedFlavor")
-                    //    .Append(mlContext.Transforms.Concatenate("Features", "City", "Season", "FeelsLike", "Humidity", "Weekday"))
-                    //    .Append(mlContext.Transforms.NormalizeMinMax("Features"))
-                    //    .Append(mlContext.Transforms.Text.FeaturizeText("City"))
-                    //    .Append(mlContext.Transforms.Text.FeaturizeText("Season"))
-                    //    .Append(mlContext.Transforms.Text.FeaturizeText("Weekday"))
-                    //    .Append(mlContext.Transforms.Concatenate("Features", "Features", "City", "Season", "FeelsLike", "Humidity", "Weekday"))
-                    //    .Append(mlContext.Transforms.NormalizeMinMax("Features"))
-                    //    .Append(mlContext.Transforms.NormalizeMeanVariance("Features"))
-                    //    .Append(mlContext.Transforms.NormalizeMinMax("PredictedFlavor"))
-                    //    .Append(mlContext.Regression.Trainers.Sdca())
-                    //    .Append(mlContext.Transforms.Conversion.MapKeyToValue("PredictedFlavor"));
-                    var numericPipeline = mlContext.Transforms.Concatenate("NumericFeatures", "FeelsLike", "Humidity")
-    .Append(mlContext.Transforms.NormalizeMinMax("NumericFeatures"));
-
-                    var stringPipeline = mlContext.Transforms.Concatenate("StringFeatures", "City", "Season", "Weekday")
-                        .Append(mlContext.Transforms.Text.FeaturizeText("StringFeatures"))
-                        .Append(mlContext.Transforms.NormalizeMinMax("StringFeatures"));
-
-                    var pipeline = numericPipeline.Append(stringPipeline)
-                        .Append(mlContext.Transforms.Concatenate("Features", "NumericFeatures", "StringFeatures"))
-                        .Append(mlContext.Transforms.NormalizeMinMax("Features"))
-                        .Append(mlContext.Transforms.NormalizeMinMax("PredictedFlavor"))
-                        .Append(mlContext.Regression.Trainers.Sdca("PredictedFlavor"));
-
-
-                    // Train the model
-                    var modelML = pipeline.Fit(dataSplit.TrainSet);
-
-                    // Evaluate the model
-                    var testSetTransform = modelML.Transform(dataSplit.TestSet);
-                    //var metrics = mlContext.Regression.Evaluate(testSetTransform);
-                    //Console.WriteLine($"R-squared: {metrics.RSquared}");
-                    //Console.WriteLine($"Root Mean Squared Error: {metrics.RootMeanSquaredError}");
-
-                    // Save the trained model
-                    mlContext.Model.Save(modelML, null, "model.zip");
-                    // Make a prediction using the trained model
-                    var prediction = modelML.Transform(mlContext.Data.LoadFromEnumerable(new[] { iceCreamInput }));
-                    var flavor = mlContext.Data.CreateEnumerable<IceCreamPrediction>(prediction, reuseRowObject: false).First();
-
-                    // Update the PredictedFlavor property of the 'model'
-                    model.PredictedFlavor = flavor.PredictedFlavor;
-
-                    // You can use 'predictedFlavor' as needed
-                    Console.WriteLine($"Predicted Flavor: {model.PredictedFlavor}");
-                    // Step 3: Use the trained model to make predictions
-                    //var prediction = predictionEngine.Predict(iceCreamInput);
-
-                    // Step 4: Set the predicted flavor in the model
-                    //model.PredictedFlavor = prediction.Flavor;
+                    // Perform your logic to change the PredictedFlavor value
+                    // For example, assigning a new value based on some condition
+                    int intValue = int.Parse(item.PredictedFlavor);
+                    item.PredictedFlavor = cartController.GetFlavourNameById(intValue);
                 }
-                else
+
+                // Specify the path for the CSV file within your project directory
+                string csvFileName = "output.csv";
+                string csvFilePath = Path.Combine("C:\\Users\\lelid\\Desktop\\projectcloud\\WebApplicationIceCreamProject", csvFileName);
+
+                // Create a configuration to handle writing CSV
+                var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture);
+
+                // Write the 'data' list to the CSV file
+                using (var writer = new StreamWriter(csvFilePath))
+                using (var csv = new CsvWriter(writer, csvConfig))
                 {
-                    // Handle the case where no matching data was found in the database
-                    //model.PredictedFlavor = "Unknown";
-                    model.PredictedFlavor = -1;
+                    // Write the data to the CSV file
+                    csv.WriteRecords(data);
                 }
-                // Rest of the prediction and view rendering logic
-                // ...// Use the input data (model.City, model.Season, model.FeelsLike, model.Humidity, model.Weekday)
-                // to make an ML.NET prediction for the flavor and update model.PredictedFlavor.
-                // Implement your ML.NET prediction logic here.
+
+                // Step 2: prediction
+                model.PredictedFlavor = Predictflavor(model.City, model.Season, model.FeelsLike, model.Humidity, model.Weekday);
                 
             }
 

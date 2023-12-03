@@ -20,9 +20,7 @@ namespace WebApplicationIceCreamProject.Models
 
         [Required]
         public string Weekday { get; set; }
-        //public DayOfWeek Weekday { get; set; }
-
-        public float PredictedFlavor { get; set; }
-        //public string PredictedFlavor { get; set; }
+        
+        public string? PredictedFlavor { get; set; }
     }
 }
