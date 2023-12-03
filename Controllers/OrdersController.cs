@@ -42,6 +42,8 @@ namespace WebApplicationIceCreamProject.Controllers
                 if (!isAddressValid)
                 {
                     ModelState.AddModelError(string.Empty, "The provided street or city does not exist.");
+                    TempData["OrderPayed"] = true;
+                    //Order address isn't valid
                     return View(order);
                 }
 
