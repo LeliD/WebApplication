@@ -77,15 +77,25 @@
 					<div class="row">
 						<div class="contact-information col-md-12">
 						<h2>Send A Message</h2>
-							<form name="contactform" action="contact.php" method="post" class="contact-form d-flex flex-wrap mt-4">
+							
+							<form name="contactform" action="contact.php" method="post" class="contact-form d-flex flex-wrap mt-4" onsubmit="return showMessageBox()">
+								<!-- Your form fields go here -->
 								<div class="text-input flex-container">
-								<input type="text" name="name" placeholder="Name" class="name mr-3 mb-3">
-								<input type="text" name="email" placeholder="E-mail" class="mb-3">
-								</div><!--text-input-->
+									<input type="text" name="name" placeholder="Name" class="name mr-3 mb-3">
+									<input type="text" name="email" placeholder="E-mail" class="mb-3">
+								</div>
 								<textarea name="message" placeholder="Message" style="height: 150px;"></textarea>
 								<button type="submit" name="submit">Submit</button>
 							</form>
+
 						</div><!--contact-information-->
+						<script>
+							function showMessageBox() {
+								alert("Your message has been submitted!");
+								return false; // Prevent the form from actually submitting
+							}
+						</script>
+
 					</div>
 				</div>
 			</div><!--col-md-6-->
