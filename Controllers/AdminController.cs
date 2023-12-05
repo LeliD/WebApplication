@@ -595,20 +595,20 @@ namespace WebApplicationIceCreamProject.Controllers
                     item.PredictedFlavor = cartController.GetFlavourNameById(intValue);
                 }
 
-                // Specify the path for the CSV file within your project directory
-                string csvFileName = "output.csv";
-                string csvFilePath = Path.Combine("C:\\Users\\lelid\\Desktop\\projectcloud\\WebApplicationIceCreamProject", csvFileName);
+                //// Specify the path for the CSV file within your project directory
+                //string csvFileName = "output.csv";
+                //string csvFilePath = Path.Combine("C:\\Users\\lelid\\Desktop\\projectcloud\\WebApplicationIceCreamProject", csvFileName);
 
-                // Create a configuration to handle writing CSV
-                var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture);
+                //// Create a configuration to handle writing CSV
+                //var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture);
 
-                // Write the 'data' list to the CSV file
-                using (var writer = new StreamWriter(csvFilePath))
-                using (var csv = new CsvWriter(writer, csvConfig))
-                {
-                    // Write the data to the CSV file
-                    csv.WriteRecords(data);
-                }
+                //// Write the 'data' list to the CSV file
+                //using (var writer = new StreamWriter(csvFilePath))
+                //using (var csv = new CsvWriter(writer, csvConfig))
+                //{
+                //    // Write the data to the CSV file
+                //    csv.WriteRecords(data);
+                //}
 
                 // Step 2: prediction
                 model.PredictedFlavor = Predictflavor(model.City, model.Season, model.FeelsLike, model.Humidity, model.Weekday);
